@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" id="html-tag" dir="rtl">
+<html lang="en" id="html-tag" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eleven Pop | Global Streetwear Brand</title>
+    <title>Eleven | Global Streetwear Brand</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Cairo:wght@400;700&display=swap');
 
@@ -84,7 +84,7 @@
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             filter: brightness(0.3) grayscale(0.4);
         }
-        .hero-content { position: relative; z-index: 2; text-align: center; color: var(--white); }
+        .hero-content { relative; z-index: 2; text-align: center; color: var(--white); }
         .hero-title { font-size: clamp(3rem, 12vw, 8rem); font-weight: 900; letter-spacing: 20px; text-transform: uppercase; }
 
         /* Nav & Controls */
@@ -213,13 +213,13 @@
     <div id="loader"><h1>ELEVEN</h1></div>
 
     <div class="announcement-bar">
-        <span id="trans-announcement">فلاش سيل لفترة محدودة! ينتهي العرض خلال:</span>
+        <span id="trans-announcement">FLASH SALE FOR A LIMITED TIME! ENDS IN:</span>
         <span id="countdown-timer" style="letter-spacing: 2px; font-family:monospace; color:yellow;">00:00:00</span>
     </div>
 
     <div id="sales-pop" class="sales-notification">
-        <b id="buyer-name">أحمد من دمياط</b>
-        <p id="buyer-action" style="font-size:0.85rem; opacity:0.8;">اشترى تيشيرت Eleven Piece</p>
+        <b id="buyer-name">Ahmed from Damietta</b>
+        <p id="buyer-action" style="font-size:0.85rem; opacity:0.8;">bought Eleven Piece</p>
     </div>
 
     <header class="hero-bar">
@@ -236,7 +236,7 @@
         <div style="font-weight:900; letter-spacing:4px;">ELEVEN POP</div>
         <div class="nav-links">
             <div class="nav-btn" id="themeBtn" onclick="toggleTheme()" style="font-size: 1.1rem;">🌙</div>
-            <div class="nav-btn" id="langBtn" onclick="toggleLanguage()" style="color:#25d366;">EN</div>
+            <div class="nav-btn" id="langBtn" onclick="toggleLanguage()" style="color:#25d366;">AR</div>
             <div class="nav-btn" id="userIcon" onclick="toggleLogin()">LOGIN</div>
             <div class="nav-btn" id="bagBtn" onclick="toggleCart()">BAG (<span id="cart-count">0</span>)</div>
         </div>
@@ -244,11 +244,11 @@
 
     <div class="controls-panel">
         <div class="filter-buttons">
-            <button class="filter-btn active" id="btn-all" onclick="filterItems('all', this)">الكل</button>
-            <button class="filter-btn" id="btn-best" onclick="filterItems('best', this)">الأكثر مبيعاً</button>
-            <button class="filter-btn" id="btn-sale" onclick="filterItems('sale', this)">عروض الخصم</button>
+            <button class="filter-btn active" id="btn-all" onclick="filterItems('all', this)">ALL</button>
+            <button class="filter-btn" id="btn-best" onclick="filterItems('best', this)">BEST SELLERS</button>
+            <button class="filter-btn" id="btn-sale" onclick="filterItems('sale', this)">SALES</button>
         </div>
-        <input type="text" class="search-box" id="searchBar" oninput="searchProducts()" placeholder="ابحث برقم القطعة...">
+        <input type="text" class="search-box" id="searchBar" oninput="searchProducts()" placeholder="Search by piece number...">
     </div>
 
     <section class="container">
@@ -278,7 +278,7 @@
                 <span style="color:var(--sale);" id="qv-price">550 EGP</span>
                 <span style="text-decoration:line-through; opacity:0.4;">699 EGP</span>
             </div>
-            <p id="qv-desc" style="font-size:0.9rem; opacity:0.7; line-height:1.6;">خامة قطن ميلتون 100% ثقيل مع طباعة ديجيتال أوريجينال مقاومة للغسيل. الستايل Oversized مريح ومناسب لجميع الإطلالات الشتوية والصيفية للبراند.</p>
+            <p id="qv-desc" style="font-size:0.9rem; opacity:0.7; line-height:1.6;">Premium 100% heavy cotton milton fabric with original digital print. Durable wash-resistant oversized fit tailored for modern luxury streetwear styling.</p>
         </div>
         <div id="qv-actions-container"></div>
     </div>
@@ -299,8 +299,8 @@
         <div id="cart-items" style="flex-grow:1; overflow-y:auto;"></div>
         
         <div class="promo-container">
-            <input type="text" id="promoInput" class="promo-input" placeholder="كود الخصم (ELEVEN10)">
-            <button class="filter-btn" style="padding:0 15px;" id="promo-btn-txt" onclick="applyPromo()">تطبيق</button>
+            <input type="text" id="promoInput" class="promo-input" placeholder="Promo Code (ELEVEN10)">
+            <button class="filter-btn" style="padding:0 15px;" id="promo-btn-txt" onclick="applyPromo()">APPLY</button>
         </div>
 
         <div style="border-top: 1px solid var(--border-color); padding-top: 20px;">
@@ -313,11 +313,11 @@
     </div>
 
     <script>
-        // إزالة مجلد "images/" لأن الصور ملقاة مباشرة في الـ Repository بجانب الـ HTML
+        // المتغيرات والمسارات الافتراضية
         const basePath = ""; 
         const localFallbackPath = "C:/Users/CompuLap/Downloads/ELEVEN (5)/";
 
-        let currentLang = 'ar'; 
+        let currentLang = 'en'; // تعديل: بدء الموقع بالإنجليزية افتراضياً
         let currentTheme = 'dark';
 
         const translations = {
@@ -332,7 +332,8 @@
                 selectSizeError: "اختر المقاس الأول يا بطل",
                 promoSuccess: "تم تطبيق خصم 10% بنجاح يا بطل!",
                 promoFail: "الكود غير صحيح!",
-                qvTitle: "عرض سريع",                qvDesc: "خامة قطن ميلتون 100% ثقيل مع طباعة ديجيتال أوريجينال مقاومة للغسيل. الستايل Oversized مريح ومناسب لجميع الإطلالات الشتوية والصيفية للبراند.",
+                qvTitle: "عرض سريع",
+                qvDesc: "خامة قطن ميلتون 100% ثقيل مع طباعة ديجيتال أوريجينال مقاومة للغسيل. الستايل Oversized مريح ومناسب لجميع الإطلالات الشتوية والصيفية للبراند.",
                 piece: "قطعة رقم",
                 loginClub: "نادي إيلافن",
                 loginDesc: "سجل دخولك لتكون أول من يعلم بالكوليكشنز الجديدة والخصومات الحصرية.",
@@ -417,7 +418,9 @@
 
         window.addEventListener('load', () => {
             setupLoginUI();
-            document.getElementById('searchBar').placeholder = translations[currentLang].searchPlaceholder;
+            // تهيئة إعدادات لغة البداية (الإنجليزية) بشكل صحيح
+            document.getElementById('html-tag').setAttribute('dir', 'ltr');
+            document.getElementById('searchBar').placeholder = translations['en'].searchPlaceholder;
             setTimeout(() => {
                 document.getElementById('loader').style.opacity = '0';
                 setTimeout(() => document.getElementById('loader').style.visibility = 'hidden', 1000);
@@ -436,7 +439,7 @@
         }
         setInterval(updateTimer, 1000);
 
-        // مصفوفة الـ 40 منتج من 9 لـ 48
+        // مصفوفة المنتجات من 9 لـ 48
         const selectedItems = [];
         for (let i = 9; i <= 48; i++) {
             selectedItems.push(i);
@@ -448,7 +451,6 @@
         let wishlist = [];
         let discount = 0;
 
-        // دالة تحويل مسار الصور تلقائياً في حال فشل القراءة المباشرة من جيت هاب
         function handleImgError(img, id) {
             if (!img.getAttribute('data-retry')) {
                 img.setAttribute('data-retry', 'true');
@@ -458,7 +460,6 @@
             }
         }
 
-        // دالة الـ Loop الأساسية لعرض المنتجات
         function renderProducts(itemsToRender) {
             grid.innerHTML = '';
             itemsToRender.forEach(i => {
@@ -630,11 +631,12 @@
             document.getElementById('cart-total').innerText = Math.round(total);
         }
 
+        // تعديل: الفاتورة والبيانات بالكامل ترسل باللغة الإنجليزية للواتساب
         function checkoutWhatsApp() {
             if (cart.length === 0) return;
-            let msg = currentLang === 'ar' ? "أوردر جديد من موقع Eleven:%0A%0A" : "New Order from Eleven Website:%0A%0A";
+            let msg = "New Order from Eleven Website:%0A%0A";
             cart.forEach((item, index) => {
-                msg += `${index + 1}. [Product Piece: #${item.idNum}] | [Size: ${item.size}] | [Price: ${item.price} EGP]%0A`;
+                msg += `${index + 1}. [Product: ELEVEN PIECE #${item.idNum}] | [Size: ${item.size}] | [Price: ${item.price} EGP]%0A`;
             });
             msg += `%0ATotal Bill Amount: ${document.getElementById('cart-total').innerText} EGP`;
             window.open(`https://wa.me/201062910161?text=${msg}`, '_blank');
