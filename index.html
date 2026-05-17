@@ -125,7 +125,7 @@
             border: 1px solid var(--border-color);
         }
         .product-card.visible { opacity: 1; transform: translateY(0); }
-        .product-img { width: 100%; height: 400px; overflow: hidden; background: #000; margin-bottom: 15px; position: relative; }
+        .product-img { width: 100%; height: 450px; overflow: hidden; background: #000; margin-bottom: 15px; position: relative; }
         .product-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
         .product-card:hover .product-img img { transform: scale(1.05); filter: brightness(0.8); }
 
@@ -212,19 +212,16 @@
     <div id="cursor"></div>
     <div id="loader"><h1>ELEVEN</h1></div>
 
-    <!-- Countdown Timer Header -->
     <div class="announcement-bar">
         <span id="trans-announcement">فلاش سيل لفترة محدودة! ينتهي العرض خلال:</span>
         <span id="countdown-timer" style="letter-spacing: 2px; font-family:monospace; color:yellow;">00:00:00</span>
     </div>
 
-    <!-- Sales Notification popup -->
     <div id="sales-pop" class="sales-notification">
         <b id="buyer-name">أحمد من دمياط</b>
         <p id="buyer-action" style="font-size:0.85rem; opacity:0.8;">اشترى تيشيرت Eleven Piece</p>
     </div>
 
-    <!-- Hero -->
     <header class="hero-bar">
         <div class="video-container">
             <iframe src="https://www.youtube.com/embed/5i0vYvWcaGo?autoplay=1&mute=1&controls=0&loop=1&playlist=5i0vYvWcaGo" frameborder="0" allow="autoplay; encrypted-media"></iframe>
@@ -235,20 +232,16 @@
         </div>
     </header>
 
-    <!-- Nav -->
     <nav>
         <div style="font-weight:900; letter-spacing:4px;">ELEVEN POP</div>
         <div class="nav-links">
-            <!-- Light/Dark Mode Switcher -->
             <div class="nav-btn" id="themeBtn" onclick="toggleTheme()" style="font-size: 1.1rem;">🌙</div>
-            <!-- Language Selector Button -->
             <div class="nav-btn" id="langBtn" onclick="toggleLanguage()" style="color:#25d366;">EN</div>
             <div class="nav-btn" id="userIcon" onclick="toggleLogin()">LOGIN</div>
             <div class="nav-btn" id="bagBtn" onclick="toggleCart()">BAG (<span id="cart-count">0</span>)</div>
         </div>
     </nav>
 
-    <!-- Controls Panel (Search & Filter) -->
     <div class="controls-panel">
         <div class="filter-buttons">
             <button class="filter-btn active" id="btn-all" onclick="filterItems('all', this)">الكل</button>
@@ -258,12 +251,10 @@
         <input type="text" class="search-box" id="searchBar" oninput="searchProducts()" placeholder="ابحث برقم القطعة...">
     </div>
 
-    <!-- Products Section -->
     <section class="container">
         <div class="product-grid" id="product-grid"></div>
     </section>
 
-    <!-- Footer -->
     <footer style="background:#000; padding:80px 5%; text-align:center; border-top:1px solid #111; color: white;">
         <h2 style="font-size:2.5rem; letter-spacing:10px; margin-bottom:30px;">ELEVEN</h2>
         <div class="social-links">
@@ -273,7 +264,6 @@
         <p style="opacity:0.3; font-size:0.7rem;">© 2026 ELEVEN LOCAL BRAND. ALL RIGHTS RESERVED.</p>
     </footer>
 
-    <!-- Quick View Overlay -->
     <div class="quickview-overlay" id="quickviewOverlay">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
             <h3 id="qv-title" style="letter-spacing: 3px;">QUICK VIEW</h3>
@@ -293,7 +283,6 @@
         <div id="qv-actions-container"></div>
     </div>
 
-    <!-- Login Sidebar -->
     <div class="login-overlay" id="loginOverlay">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
             <h2 style="letter-spacing: 3px; margin-bottom:20px;">&nbsp;</h2>
@@ -302,7 +291,6 @@
         <div style="flex-grow:1;" id="login-form-area"></div>
     </div>
 
-    <!-- Cart Sidebar -->
     <div class="cart-overlay" id="cartOverlay">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
             <h2 id="cart-title-txt" style="letter-spacing: 5px;">YOUR BAG</h2>
@@ -325,7 +313,8 @@
     </div>
 
     <script>
-        // المسار المحلي على جهازك كاحتياطي في حالة فشل المسار النسبي
+        // إزالة مجلد "images/" لأن الصور ملقاة مباشرة في الـ Repository بجانب الـ HTML
+        const basePath = ""; 
         const localFallbackPath = "C:/Users/CompuLap/Downloads/ELEVEN (5)/";
 
         let currentLang = 'ar'; 
@@ -343,8 +332,7 @@
                 selectSizeError: "اختر المقاس الأول يا بطل",
                 promoSuccess: "تم تطبيق خصم 10% بنجاح يا بطل!",
                 promoFail: "الكود غير صحيح!",
-                qvTitle: "عرض سريع",
-                qvDesc: "خامة قطن ميلتون 100% ثقيل مع طباعة ديجيتال أوريجينال مقاومة للغسيل. الستايل Oversized مريح ومناسب لجميع الإطلالات الشتوية والصيفية للبراند.",
+                qvTitle: "عرض سريع",                qvDesc: "خامة قطن ميلتون 100% ثقيل مع طباعة ديجيتال أوريجينال مقاومة للغسيل. الستايل Oversized مريح ومناسب لجميع الإطلالات الشتوية والصيفية للبراند.",
                 piece: "قطعة رقم",
                 loginClub: "نادي إيلافن",
                 loginDesc: "سجل دخولك لتكون أول من يعلم بالكوليكشنز الجديدة والخصومات الحصرية.",
@@ -460,9 +448,9 @@
         let wishlist = [];
         let discount = 0;
 
-        // دالة إصلاح المسار الذكية لو السيرفر أوفلاين
+        // دالة تحويل مسار الصور تلقائياً في حال فشل القراءة المباشرة من جيت هاب
         function handleImgError(img, id) {
-            if (img.getAttribute('data-retry') !== 'true') {
+            if (!img.getAttribute('data-retry')) {
                 img.setAttribute('data-retry', 'true');
                 img.src = `${localFallbackPath}${id}.png`;
             } else {
@@ -486,7 +474,7 @@
                     <div class="sale-tag">SALE</div>
                     <button class="wishlist-btn ${isFav}" onclick="event.stopPropagation(); toggleWishlist(${i}, this)">❤</button>
                     <div class="product-img" onclick="openQuickView(${i})">
-                        <img src="images/${i}.png" alt="Eleven Piece" onerror="handleImgError(this, ${i})">
+                        <img src="${basePath}${i}.png" alt="Eleven Piece" onerror="handleImgError(this, ${i})">
                         <div class="quickview-hint">QUICK VIEW</div>
                     </div>
                     <div style="display:flex; justify-content:space-between; font-weight:900; margin-bottom:5px;">
@@ -523,7 +511,7 @@
             
             const qvImg = document.getElementById('qv-image-src');
             qvImg.removeAttribute('data-retry');
-            qvImg.src = `images/${id}.png`;
+            qvImg.src = `${basePath}${id}.png`;
             qvImg.onerror = function() { handleImgError(this, id); };
             
             document.getElementById('qv-desc').innerText = translations[currentLang].qvDesc;
@@ -612,7 +600,7 @@
 
         function addToBag(id, name, price) {
             if (!selections[id]) { alert(translations[currentLang].selectSizeError); return; }
-            cart.push({ id: Date.now(), name, price, size: selections[id] });
+            cart.push({ id: Date.now(), idNum: id, name, price, size: selections[id] });
             updateCart();
             toggleCart();
         }
@@ -644,9 +632,12 @@
 
         function checkoutWhatsApp() {
             if (cart.length === 0) return;
-            let msg = currentLang === 'ar' ? "أوردر جديد من موقع Eleven:%0A%0A" : "New Order from Eleven Web:%0A%0A";
-            cart.forEach(i => msg += `- ${i.name} (Size: ${i.size})%0A`);
-            window.open(`https://wa.me/201062910161?text=${msg}%0ATotal Amount: ${document.getElementById('cart-total').innerText} EGP`);
+            let msg = currentLang === 'ar' ? "أوردر جديد من موقع Eleven:%0A%0A" : "New Order from Eleven Website:%0A%0A";
+            cart.forEach((item, index) => {
+                msg += `${index + 1}. [Product Piece: #${item.idNum}] | [Size: ${item.size}] | [Price: ${item.price} EGP]%0A`;
+            });
+            msg += `%0ATotal Bill Amount: ${document.getElementById('cart-total').innerText} EGP`;
+            window.open(`https://wa.me/201062910161?text=${msg}`, '_blank');
         }
     </script>
 </body>
