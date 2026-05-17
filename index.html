@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eleven | Global Streetwear Brand</title>
+    <title>Eleven Pop | Global Streetwear Brand</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Cairo:wght@400;700&display=swap');
 
@@ -84,7 +84,7 @@
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             filter: brightness(0.3) grayscale(0.4);
         }
-        .hero-content { relative; z-index: 2; text-align: center; color: var(--white); }
+        .hero-content { position: relative; z-index: 2; text-align: center; color: var(--white); }
         .hero-title { font-size: clamp(3rem, 12vw, 8rem); font-weight: 900; letter-spacing: 20px; text-transform: uppercase; }
 
         /* Nav & Controls */
@@ -313,11 +313,10 @@
     </div>
 
     <script>
-        // المتغيرات والمسارات الافتراضية
         const basePath = ""; 
         const localFallbackPath = "C:/Users/CompuLap/Downloads/ELEVEN (5)/";
 
-        let currentLang = 'en'; // تعديل: بدء الموقع بالإنجليزية افتراضياً
+        let currentLang = 'en'; 
         let currentTheme = 'dark';
 
         const translations = {
@@ -418,7 +417,6 @@
 
         window.addEventListener('load', () => {
             setupLoginUI();
-            // تهيئة إعدادات لغة البداية (الإنجليزية) بشكل صحيح
             document.getElementById('html-tag').setAttribute('dir', 'ltr');
             document.getElementById('searchBar').placeholder = translations['en'].searchPlaceholder;
             setTimeout(() => {
@@ -439,7 +437,6 @@
         }
         setInterval(updateTimer, 1000);
 
-        // مصفوفة المنتجات من 9 لـ 48
         const selectedItems = [];
         for (let i = 9; i <= 48; i++) {
             selectedItems.push(i);
@@ -601,7 +598,8 @@
 
         function addToBag(id, name, price) {
             if (!selections[id]) { alert(translations[currentLang].selectSizeError); return; }
-            cart.push({ id: Date.now(), idNum: id, name, price, size: selections[id] });
+            // تم تعديل تخزين الكارت لتأمين وحفظ رقم المنتج الصريح والمقاس المختار بشكل دائم
+            cart.push({ id: Date.now(), idNum: id, name: `Piece #${id}`, price: price, size: selections[id] });
             updateCart();
             toggleCart();
         }
@@ -631,11 +629,11 @@
             document.getElementById('cart-total').innerText = Math.round(total);
         }
 
-        // تعديل: الفاتورة والبيانات بالكامل ترسل باللغة الإنجليزية للواتساب
         function checkoutWhatsApp() {
             if (cart.length === 0) return;
             let msg = "New Order from Eleven Website:%0A%0A";
             cart.forEach((item, index) => {
+                // سحب رقم تيشيرت الصحيح والمقاس الدقيق لكل قطعة في السلة لبناء الفاتورة بشكل سليم
                 msg += `${index + 1}. [Product: ELEVEN PIECE #${item.idNum}] | [Size: ${item.size}] | [Price: ${item.price} EGP]%0A`;
             });
             msg += `%0ATotal Bill Amount: ${document.getElementById('cart-total').innerText} EGP`;
