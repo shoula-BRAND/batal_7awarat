@@ -54,11 +54,11 @@
             z-index: 9999; transition: transform 0.05s linear;
         }
 
-        /* Loader */
+        /* Loader المسرع حديثاً */
         #loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--black); display: flex; justify-content: center;
-            align-items: center; z-index: 10000; transition: opacity 1s ease, visibility 1s;
+            align-items: center; z-index: 10000; transition: opacity 0.4s ease, visibility 0.4s;
         }
         #loader h1 { color: var(--white); font-size: 3rem; letter-spacing: 15px; animation: pulse 1.5s infinite; }
 
@@ -69,7 +69,7 @@
             justify-content: center; gap: 15px; z-index: 101; position: relative;
         }
 
-        /* Hero Section */
+        /* Hero Section المتجاوب بالكامل مع الشاشات والموبايل */
         .hero-bar {
             width: 100%; height: 80vh; position: relative;
             background: var(--black); display: flex; justify-content: center;
@@ -80,10 +80,19 @@
             pointer-events: none; z-index: 1;
         }
         .video-container iframe {
-            width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
+            width: 100%; height: 100%;
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             filter: brightness(0.3) grayscale(0.4);
+            object-fit: cover;
         }
+        /* تعديل الأبعاد البرمجية للفيديو الإعلاني حسب شاشة عرض المستخدم */
+        @media (min-aspect-ratio: 16/9) {
+            .video-container iframe { height: 56.25vw; }
+        }
+        @media (max-aspect-ratio: 16/9) {
+            .video-container iframe { width: 177.78vh; }
+        }
+        
         .hero-content { position: relative; z-index: 2; text-align: center; color: var(--white); }
         .hero-title { font-size: clamp(3rem, 12vw, 8rem); font-weight: 900; letter-spacing: 20px; text-transform: uppercase; }
 
@@ -177,7 +186,7 @@
         .qv-img { width: 100%; height: 350px; background: #222; margin-bottom: 20px; overflow: hidden; }
         .qv-img img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* ستايل كروت الحقيبة */
+        /* كروت السلة التعديلية */
         .cart-item {
             display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;
@@ -491,14 +500,15 @@
             cursor.style.top = e.clientY + 'px';
         });
 
+        // تم اختزال مدة انتظار شاشة التحميل برمجياً لتصبح 0.4 ثانية فقط كحد أقصى لسرعة لا تصدق
         window.addEventListener('load', () => {
             setupLoginUI();
             document.getElementById('html-tag').setAttribute('dir', 'ltr');
             document.getElementById('searchBar').placeholder = translations['en'].searchPlaceholder;
             setTimeout(() => {
                 document.getElementById('loader').style.opacity = '0';
-                setTimeout(() => document.getElementById('loader').style.visibility = 'hidden', 1000);
-            }, 1000);
+                setTimeout(() => document.getElementById('loader').style.visibility = 'hidden', 400);
+            }, 400);
         });
 
         function updateTimer() {
@@ -769,7 +779,6 @@
             
             msg += `--- ORDERED PIECES ---%0A`;
             cart.forEach((item, index) => {
-                // تم حل المشكلة نهائياً باستبدال # بـ كود التحويل والربط المخصص للأدلة %23
                 msg += `${index + 1}. • Product: ELEVEN PIECE %23${item.idNum} | Size: ${item.size} | Price: ${item.price} EGP%0A`;
             });
             
