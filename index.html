@@ -497,4 +497,300 @@
             }
         }
 
-        function renderProducts
+        function renderProducts(itemsToRender) {
+            grid.innerHTML = '';
+            itemsToRender.forEach(i => {
+                const randomViewers = Math.floor(Math.random() * 15) + 8;
+                const isFav = wishlist.includes(i) ? 'active' : '';
+                const viewerText = translations[currentLang].viewing.replace("{num}", randomViewers);
+                const coinHintText = translations[currentLang].coinEarnHint.replace("{coins}", "55");
+
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.setAttribute('data-id', i);
+                
+                card.innerHTML = `
+                    <div class="sale-tag">SALE</div>
+                    <button class="wishlist-btn ${isFav}" onclick="event.stopPropagation(); toggleWishlist(${i}, this)">❤</button>
+                    <div class="product-img" onclick="openQuickView(${i})">
+                        <img src="${basePath}${i}.png" alt="Eleven Piece" onerror="handleImgError(this, ${i})">
+                        <div class="quickview-hint">QUICK VIEW</div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-weight:900; margin-bottom:5px;">
+                        <span>ELEVEN ${translations[currentLang].piece} ${i}</span>
+                        <div class="price-container">
+                            <span class="old-price">699 EGP</span>
+                            <span class="new-price">550 EGP</span>
+                        </div>
+                    </div>
+                    <div class="viewer-count">${viewerText}</div>
+                    <div class="coins-preview">${coinHintText}</div>
+                    <div class="size-selector" id="size-group-${i}">
+                        <button class="size-btn" onclick="event.stopPropagation(); selectSize(this, 'M', ${i})">M</button>
+                        <button class="size-btn" onclick="event.stopPropagation(); selectSize(this, 'L', ${i})">L</button>
+                        <button class="size-btn" onclick="event.stopPropagation(); selectSize(this, 'XL', ${i})">XL</button>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation(); addToBag(${i}, 'Piece #${i}', 550)">${translations[currentLang].addToBag}</button>
+                `;
+                grid.appendChild(card);
+            });
+
+            setTimeout(() => {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+                }, { threshold: 0.05 });
+                document.querySelectorAll('.product-card').forEach(c => observer.observe(c));
+            }, 50);
+        }
+
+        renderProducts(selectedItems);
+
+        function openQuickView(id) {
+            document.getElementById('qv-title').innerText = `${translations[currentLang].qvTitle} | #${id}`;
+            document.getElementById('qv-display-name').innerText = `Eleven Oversized Piece #${id}`;
+            
+            const qvImg = document.getElementById('qv-image-src');
+            qvImg.removeAttribute('data-retry');
+            qvImg.src = `${basePath}${id}.png`;
+            qvImg.onerror = function() { handleImgError(this, id); };
+            
+            document.getElementById('qv-desc').innerText = translations[currentLang].qvDesc;
+            
+            document.getElementById('qv-actions-container').innerHTML = `
+                <div class="size-selector" id="qv-size-group">
+                    <button class="size-btn ${selections[id] === 'M' ? 'selected' : ''}" onclick="selectSize(this, 'M', ${id}, true)">M</button>
+                    <button class="size-btn ${selections[id] === 'L' ? 'selected' : ''}" onclick="selectSize(this, 'L', ${id}, true)">L</button>
+                    <button class="size-btn ${selections[id] === 'XL' ? 'selected' : ''}" onclick="selectSize(this, 'XL', ${id}, true)">XL</button>
+                </div>
+                <button class="add-btn" onclick="addToBag(${id}, 'Piece #${id}', 550); toggleQuickView();">${translations[currentLang].addToBag}</button>
+            `;
+            document.getElementById('quickviewOverlay').classList.add('active');
+        }
+
+        function toggleQuickView() { document.getElementById('quickviewOverlay').classList.remove('active'); }
+
+        function selectSize(btn, size, id, isQv = false) {
+            selections[id] = size;
+            if(isQv) {
+                document.querySelectorAll('#qv-size-group .size-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+            }
+            const mainGroup = document.getElementById(`size-group-${id}`);
+            if (mainGroup) {
+                mainGroup.querySelectorAll('.size-btn').forEach(b => {
+                    if(b.innerText === size) b.classList.add('selected');
+                    else b.classList.remove('selected');
+                });
+            }
+        }
+
+        function updateCartItemSize(cartItemId, newSize) {
+            const item = cart.find(x => x.id === cartItemId);
+            if (item) {
+                item.size = newSize;
+                updateCart();
+            }
+        }
+
+        function toggleWishlist(id, btn) {
+            if(wishlist.includes(id)) {
+                wishlist = wishlist.filter(x => x !== id);
+                btn.classList.remove('active');
+            } else {
+                wishlist.push(id);
+                btn.classList.add('active');
+            }
+        }
+
+        function searchProducts() {
+            const val = document.getElementById('searchBar').value.trim();
+            if(val === "") { renderProducts(selectedItems); return; }
+            const filtered = selectedItems.filter(id => id.toString().includes(val));
+            renderProducts(filtered);
+        }
+
+        function filterItems(type, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            if(type === 'all') renderProducts(selectedItems);
+            else if(type === 'best') renderProducts([9, 11, 23, 35, 44, 48]); 
+            else if(type === 'sale') renderProducts(selectedItems);
+        }
+
+        function applyPromo() {
+            const code = document.getElementById('promoInput').value.trim();
+            if(code === "ELEVEN10") {
+                discount = 0.10;
+                alert(translations[currentLang].promoSuccess);
+                updateCart();
+            } else if(code.startsWith("11COIN-")) {
+                // تفعيل كاش باك الكوينز يدوياً لو معاه كود سري من أوردر قديم
+                discount = 0.15; // خصم كاش باك خاص بالكوينز 15%
+                alert(currentLang === 'en' ? "Eleven Coins Loyalty Code Applied! 15% Off!" : "تم تفعيل كود كاش باك كوينز Eleven بنجاح! خصم 15%!");
+                updateCart();
+            } else {
+                alert(translations[currentLang].promoFail);
+            }
+        }
+
+        function toggleCart() { 
+            document.getElementById('loginOverlay').classList.remove('active');
+            document.getElementById('quickviewOverlay').classList.remove('active');
+            document.getElementById('cartOverlay').classList.toggle('active'); 
+        }
+        function toggleLogin() { 
+            document.getElementById('cartOverlay').classList.remove('active');
+            document.getElementById('quickviewOverlay').classList.remove('active');
+            document.getElementById('loginOverlay').classList.toggle('active'); 
+        }
+
+        function handleLoginSubmit() {
+            const name = document.getElementById('usernameInput').value;
+            if(name.trim() === "") { return; }
+            document.getElementById('userIcon').innerText = name.split(" ")[0].toUpperCase();
+            toggleLogin();
+        }
+
+        function addToBag(id, name, price) {
+            if (!selections[id]) { alert(translations[currentLang].selectSizeError); return; }
+            cart.push({ id: Date.now(), idNum: id, price: price, size: selections[id] });
+            updateCart();
+            toggleCart();
+        }
+
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            updateCart();
+        }
+
+        function updateCart() {
+            const container = document.getElementById('cart-items');
+            let subtotal = 0;
+            container.innerHTML = '';
+            
+            cart.forEach(item => {
+                subtotal += item.price;
+                let displayName = `ELEVEN Piece #${item.idNum}`;
+                
+                container.innerHTML += `
+                <div class="cart-item">
+                    <div class="cart-item-details">
+                        <b>${displayName}</b>
+                        <div class="cart-item-size-editor">
+                            <button class="cart-size-edit-btn ${item.size === 'M' ? 'active' : ''}" onclick="updateCartItemSize(${item.id}, 'M')">M</button>
+                            <button class="cart-size-edit-btn ${item.size === 'L' ? 'active' : ''}" onclick="updateCartItemSize(${item.id}, 'L')">L</button>
+                            <button class="cart-size-edit-btn ${item.size === 'XL' ? 'active' : ''}" onclick="updateCartItemSize(${item.id}, 'XL')">XL</button>
+                        </div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span>${item.price} EGP</span>
+                        <button class="remove-item-btn" onclick="removeFromCart(${item.id})">✕</button>
+                    </div>
+                </div>`;
+            });
+
+            // حساب كوينز الكاش باك: كل قطعة بتدي 55 كوينز (تساوي 55 جنيه للأوردر الجاي)
+            let calculatedCoins = cart.length * 55;
+            let calculatedCash = cart.length * 55;
+            
+            document.getElementById('earned-coins-val').innerText = calculatedCoins;
+            document.getElementById('earned-cash-val').innerText = calculatedCash;
+            
+            let rewardsText = translations[currentLang].rewardsDesc.replace("{coins}", calculatedCoins).replace("{cash}", calculatedCash);
+            document.getElementById('rewards-box-desc').innerHTML = rewardsText;
+            
+            if(discount > 0) subtotal = subtotal - (subtotal * discount);
+            
+            const shippingSelect = document.getElementById('shippingLocation');
+            let shippingCost = 0;
+            if(shippingSelect && shippingSelect.value !== "0") {
+                shippingCost = parseInt(shippingSelect.value) || 0;
+            }
+            
+            let finalTotal = subtotal + shippingCost;
+            
+            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('cart-subtotal-val').innerText = Math.round(subtotal);
+            document.getElementById('cart-shipping-val').innerText = shippingCost;
+            document.getElementById('cart-total').innerText = Math.round(finalTotal);
+        }
+
+        function checkoutWhatsApp() {
+            if (cart.length === 0) return alert(currentLang === 'en' ? "Bag is empty" : "الحقيبة فارغة");
+            
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+            const shippingSelect = document.getElementById('shippingLocation');
+            const payment = document.getElementById('paymentMethod').value;
+            
+            if(!name || !phone || !address || shippingSelect.value === "0") {
+                alert(translations[currentLang].formError);
+                return;
+            }
+            
+            const govName = shippingSelect.options[shippingSelect.selectedIndex].text.split(" (")[0];
+            const shippingVal = document.getElementById('cart-shipping-val').innerText;
+            const subtotalVal = document.getElementById('cart-subtotal-val').innerText;
+            const totalVal = document.getElementById('cart-total').innerText;
+
+            // توليد كود كاش باك سري وفريد للأوردر القادم بناءً على عدد القطع
+            let totalCoinsEarned = cart.length * 55;
+            let secretLoyaltyCode = `11COIN-${Math.floor(1000 + Math.random() * 9000)}`;
+
+            let itemsText = "";
+            cart.forEach((item, index) => {
+                itemsText += `[${index + 1}] PIECE #${item.idNum} | Size: ${item.size} | Price: ${item.price} EGP \n`;
+            });
+
+            // 1. إرسال الأوردر أوتوماتيكياً إلى لوحة تحكم Formspree في الخلفية
+            const endpointURL = "https://formspree.io/f/xjgzkzde"; 
+            
+            const payload = new FormData();
+            payload.append("الاسم", name);
+            payload.append("رقم الواتساب", phone);
+            payload.append("المحافظة", govName);
+            payload.append("العنوان بالتفصيل", address);
+            payload.append("القطع المطلوبة", itemsText);
+            payload.append("طريقة الدفع", payment);
+            payload.append("إجمالي الفاتورة", `${totalVal} EGP`);
+            payload.append("الكوينز المكتسبة", `${totalCoinsEarned} Coins`);
+            payload.append("كود الكاش باك السري", secretLoyaltyCode);
+
+            fetch(endpointURL, {
+                method: "POST",
+                body: payload,
+                headers: { 'Accept': 'application/json' }
+            }).then(() => {
+                console.log("Success! Saved to formspree dashboard.");
+            }).catch(err => console.error("Error sending data:", err));
+
+            // 2. إرسال الأوردر إلى شات الواتساب لتأكيد الشحن فوراً مع تفاصيل المكافأة
+            let msg = `====== NEW ORDER (ELEVEN) ======%0A%0A`;
+            msg += `--- CUSTOMER DETAILS ---%0A`;
+            msg += `• Name: ${name}%0A`;
+            msg += `• WhatsApp: ${phone}%0A`;
+            msg += `• Governorate: ${govName}%0A`;
+            msg += `• Address: ${address}%0A`;
+            msg += `• Payment Method: ${payment}%0A%0A`;
+            
+            msg += `--- ORDERED PIECES ---%0A`;
+            cart.forEach((item, index) => {
+                msg += `${index + 1}. • Product: ELEVEN PIECE %23${item.idNum} | Size: ${item.size} | Price: ${item.price} EGP%0A`;
+            });
+            
+            msg += `%0A--- COINS REWARDS LOYALTY ---%0A`;
+            msg += `• Earned Coins: +${totalCoinsEarned} Coins%0A`;
+            msg += `• Next Order Cashback Code: ${secretLoyaltyCode}%0A%0A`;
+
+            msg += `--- FINAL RECEIPT ---%0A`;
+            msg += `• Items Subtotal: ${subtotalVal} EGP%0A`;
+            msg += `• Shipping Cost: ${shippingVal} EGP%0A`;
+            msg += `• TOTAL BILL: ${totalVal} EGP%0A`;
+            msg += `============================`;
+            
+            window.open(`https://wa.me/201062910161?text=${msg}`, '_blank');
+        }
+    </script>
+</body>
+</html>
