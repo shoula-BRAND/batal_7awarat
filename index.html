@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eleven Pop | Global Streetwear Brand</title>
+    <title>Eleven | Global Streetwear Brand</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Cairo:wght@400;700;900&display=swap');
 
@@ -23,6 +23,7 @@
             --accent: #25d366; 
             --sale: #e63946;
             --text-muted: #888;
+            --gold: #ffd700;
         }
 
         /* Light Mode Variables Override */
@@ -137,6 +138,9 @@
         .new-price { color: var(--sale); font-weight: bold; }
         .viewer-count { font-size: 0.75rem; color: #25d366; margin-top: 5px; font-weight: bold; display: flex; align-items: center; gap: 5px;}
 
+        /* Coins Preview Box */
+        .coins-preview { font-size: 0.8rem; color: var(--gold); margin-top: 5px; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+
         .size-selector { display: flex; gap: 8px; margin: 15px 0; }
         .size-btn { flex: 1; padding: 8px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--text-color); font-weight: bold; transition: 0.2s; }
         .size-btn.selected { background: var(--text-color); color: var(--bg-color); border-color: var(--text-color); }
@@ -174,6 +178,9 @@
         .promo-container { display: flex; gap: 10px; margin-bottom: 20px; }
         .promo-input { margin-bottom: 0; }
 
+        /* Rewards Box in Cart */
+        .rewards-summary-box { background: #111; border: 1px dashed var(--gold); padding: 15px; margin-bottom: 20px; text-align: center; font-size: 0.9rem; }
+
         .social-links { display: flex; justify-content: center; gap: 40px; margin-bottom: 40px; }
         .social-links a { color: var(--text-color); text-decoration: none; font-size: 0.8rem; letter-spacing: 3px; opacity: 0.5; transition: 0.3s; }
         .social-links a:hover { opacity: 1; }
@@ -194,7 +201,7 @@
     </div>
 
     <nav>
-        <div style="font-weight:900; letter-spacing:4px; cursor:pointer;" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">ELEVEN POP</div>
+        <div style="font-weight:900; letter-spacing:4px; cursor:pointer;" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">ELEVEN</div>
         <div class="nav-links">
             <div class="nav-btn" id="themeBtn" onclick="toggleTheme()" style="font-size: 1.1rem;">🌙</div>
             <div class="nav-btn" id="langBtn" onclick="toggleLanguage()" style="color:#25d366;">AR</div>
@@ -229,8 +236,8 @@
     <footer style="background:#000; padding:80px 5%; text-align:center; border-top:1px solid #111; color: white;">
         <h2 style="font-size:2.5rem; letter-spacing:10px; margin-bottom:30px;">ENTERTAINMENT BY ELEVEN</h2>
         <div class="social-links">
-            <a href="https://www.instagram.com/eleven.pop" target="_blank" style="color: white;">INSTAGRAM</a>
-            <a href="https://www.tiktok.com/@eleven.pop" target="_blank" style="color: white;">TIKTOK</a>
+            <a href="https://www.instagram.com/eleven.eg2026" target="_blank" style="color: white;">INSTAGRAM</a>
+            <a href="https://www.tiktok.com/@eleven.2025" target="_blank" style="color: white;">TIKTOK</a>
         </div>
         <p style="opacity:0.3; font-size:0.7rem;">© 2026 ELEVEN LOCAL BRAND. ALL RIGHTS RESERVED.</p>
     </footer>
@@ -268,7 +275,12 @@
         
         <div id="cart-items"></div>
         
-        <div class="promo-container" style="margin-top: 15px;">
+        <div class="rewards-summary-box">
+            <span id="rewards-box-txt" style="color: var(--gold); font-weight: bold;">🪙 ELEVEN COINS REWARDS:</span>
+            <div style="margin-top:5px; font-size:0.8rem; opacity:0.9;" id="rewards-box-desc">You will earn <span id="earned-coins-val" style="color:var(--gold); font-weight:bold;">0</span> Coins from this order! (Worth <span id="earned-cash-val" style="color:#25d366; font-weight:bold;">0</span> EGP Cashback for next order)</div>
+        </div>
+
+        <div class="promo-container">
             <input type="text" id="promoInput" class="promo-input" placeholder="Promo Code (ELEVEN10)">
             <button class="filter-btn" style="padding:0 15px;" id="promo-btn-txt" onclick="applyPromo()">APPLY</button>
         </div>
@@ -350,7 +362,10 @@
                 subtotal: "المجموع الفرعي:",
                 shippingCost: "تكلفة الشحن:",
                 selectGov: "اختر المحافظة (لتحديد تكلفة الشحن)",
-                formError: "من فضلك املأ جميع بيانات الشحن بالتفصيل يا بطل!"
+                formError: "من فضلك املأ جميع بيانات الشحن بالتفصيل يا بطل!",
+                coinEarnHint: "🪙 هتكسب {coins} كوينز من القطعة دي!",
+                rewardsTitle: "🪙 مكافآت ونقاط إيلافن كوينز:",
+                rewardsDesc: "هتكسب {coins} كوينز من الأوردر ده! (تساوي {cash} جنيه كاش باك للأوردر الجاي)"
             },
             en: {
                 announcement: "FLASH SALE FOR A LIMITED TIME! ENDS IN:",
@@ -383,7 +398,10 @@
                 subtotal: "Subtotal:",
                 shippingCost: "Shipping Cost:",
                 selectGov: "Select Governorate (Shipping Location)",
-                formError: "Please fill out all shipping details first!"
+                formError: "Please fill out all shipping details first!",
+                coinEarnHint: "🪙 You will earn {coins} Eleven Coins!",
+                rewardsTitle: "🪙 ELEVEN COINS REWARDS:",
+                rewardsDesc: "You will earn {coins} Coins from this order! (Worth {cash} EGP Cashback for next order)"
             }
         };
 
@@ -415,6 +433,7 @@
             document.getElementById('custAddress').placeholder = translations[currentLang].addr;
             document.getElementById('subtotal-txt').innerText = translations[currentLang].subtotal;
             document.getElementById('shipping-txt').innerText = translations[currentLang].shippingCost;
+            document.getElementById('rewards-box-txt').innerText = translations[currentLang].rewardsTitle;
 
             setupLoginUI();
             renderProducts(selectedItems);
@@ -478,273 +497,4 @@
             }
         }
 
-        function renderProducts(itemsToRender) {
-            grid.innerHTML = '';
-            itemsToRender.forEach(i => {
-                const randomViewers = Math.floor(Math.random() * 15) + 8;
-                const isFav = wishlist.includes(i) ? 'active' : '';
-                const viewerText = translations[currentLang].viewing.replace("{num}", randomViewers);
-
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.setAttribute('data-id', i);
-                
-                card.innerHTML = `
-                    <div class="sale-tag">SALE</div>
-                    <button class="wishlist-btn ${isFav}" onclick="event.stopPropagation(); toggleWishlist(${i}, this)">❤</button>
-                    <div class="product-img" onclick="openQuickView(${i})">
-                        <img src="${basePath}${i}.png" alt="Eleven Piece" onerror="handleImgError(this, ${i})">
-                        <div class="quickview-hint">QUICK VIEW</div>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; font-weight:900; margin-bottom:5px;">
-                        <span>ELEVEN ${translations[currentLang].piece} ${i}</span>
-                        <div class="price-container">
-                            <span class="old-price">699 EGP</span>
-                            <span class="new-price">550 EGP</span>
-                        </div>
-                    </div>
-                    <div class="viewer-count">${viewerText}</div>
-                    <div class="size-selector" id="size-group-${i}">
-                        <button class="size-btn" onclick="event.stopPropagation(); selectSize(this, 'M', ${i})">M</button>
-                        <button class="size-btn" onclick="event.stopPropagation(); selectSize(this, 'L', ${i})">L</button>
-                        <button class="size-btn" onclick="event.stopPropagation(); selectSize(this, 'XL', ${i})">XL</button>
-                    </div>
-                    <button class="add-btn" onclick="event.stopPropagation(); addToBag(${i}, 'Piece #${i}', 550)">${translations[currentLang].addToBag}</button>
-                `;
-                grid.appendChild(card);
-            });
-
-            setTimeout(() => {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-                }, { threshold: 0.05 });
-                document.querySelectorAll('.product-card').forEach(c => observer.observe(c));
-            }, 50);
-        }
-
-        renderProducts(selectedItems);
-
-        function openQuickView(id) {
-            document.getElementById('qv-title').innerText = `${translations[currentLang].qvTitle} | #${id}`;
-            document.getElementById('qv-display-name').innerText = `Eleven Oversized Piece #${id}`;
-            
-            const qvImg = document.getElementById('qv-image-src');
-            qvImg.removeAttribute('data-retry');
-            qvImg.src = `${basePath}${id}.png`;
-            qvImg.onerror = function() { handleImgError(this, id); };
-            
-            document.getElementById('qv-desc').innerText = translations[currentLang].qvDesc;
-            
-            document.getElementById('qv-actions-container').innerHTML = `
-                <div class="size-selector" id="qv-size-group">
-                    <button class="size-btn ${selections[id] === 'M' ? 'selected' : ''}" onclick="selectSize(this, 'M', ${id}, true)">M</button>
-                    <button class="size-btn ${selections[id] === 'L' ? 'selected' : ''}" onclick="selectSize(this, 'L', ${id}, true)">L</button>
-                    <button class="size-btn ${selections[id] === 'XL' ? 'selected' : ''}" onclick="selectSize(this, 'XL', ${id}, true)">XL</button>
-                </div>
-                <button class="add-btn" onclick="addToBag(${id}, 'Piece #${id}', 550); toggleQuickView();">${translations[currentLang].addToBag}</button>
-            `;
-            document.getElementById('quickviewOverlay').classList.add('active');
-        }
-
-        function toggleQuickView() { document.getElementById('quickviewOverlay').classList.remove('active'); }
-
-        function selectSize(btn, size, id, isQv = false) {
-            selections[id] = size;
-            if(isQv) {
-                document.querySelectorAll('#qv-size-group .size-btn').forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
-            }
-            const mainGroup = document.getElementById(`size-group-${id}`);
-            if (mainGroup) {
-                mainGroup.querySelectorAll('.size-btn').forEach(b => {
-                    if(b.innerText === size) b.classList.add('selected');
-                    else b.classList.remove('selected');
-                });
-            }
-        }
-
-        function updateCartItemSize(cartItemId, newSize) {
-            const item = cart.find(x => x.id === cartItemId);
-            if (item) {
-                item.size = newSize;
-                updateCart();
-            }
-        }
-
-        function toggleWishlist(id, btn) {
-            if(wishlist.includes(id)) {
-                wishlist = wishlist.filter(x => x !== id);
-                btn.classList.remove('active');
-            } else {
-                wishlist.push(id);
-                btn.classList.add('active');
-            }
-        }
-
-        function searchProducts() {
-            const val = document.getElementById('searchBar').value.trim();
-            if(val === "") { renderProducts(selectedItems); return; }
-            const filtered = selectedItems.filter(id => id.toString().includes(val));
-            renderProducts(filtered);
-        }
-
-        function filterItems(type, btn) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            if(type === 'all') renderProducts(selectedItems);
-            else if(type === 'best') renderProducts([9, 11, 23, 35, 44, 48]); 
-            else if(type === 'sale') renderProducts(selectedItems);
-        }
-
-        function applyPromo() {
-            const code = document.getElementById('promoInput').value.trim();
-            if(code === "ELEVEN10") {
-                discount = 0.10;
-                alert(translations[currentLang].promoSuccess);
-                updateCart();
-            } else {
-                alert(translations[currentLang].promoFail);
-            }
-        }
-
-        function toggleCart() { 
-            document.getElementById('loginOverlay').classList.remove('active');
-            document.getElementById('quickviewOverlay').classList.remove('active');
-            document.getElementById('cartOverlay').classList.toggle('active'); 
-        }
-        function toggleLogin() { 
-            document.getElementById('cartOverlay').classList.remove('active');
-            document.getElementById('quickviewOverlay').classList.remove('active');
-            document.getElementById('loginOverlay').classList.toggle('active'); 
-        }
-
-        function handleLoginSubmit() {
-            const name = document.getElementById('usernameInput').value;
-            if(name.trim() === "") { return; }
-            document.getElementById('userIcon').innerText = name.split(" ")[0].toUpperCase();
-            toggleLogin();
-        }
-
-        function addToBag(id, name, price) {
-            if (!selections[id]) { alert(translations[currentLang].selectSizeError); return; }
-            cart.push({ id: Date.now(), idNum: id, price: price, size: selections[id] });
-            updateCart();
-            toggleCart();
-        }
-
-        function removeFromCart(itemId) {
-            cart = cart.filter(item => item.id !== itemId);
-            updateCart();
-        }
-
-        function updateCart() {
-            const container = document.getElementById('cart-items');
-            let subtotal = 0;
-            container.innerHTML = '';
-            
-            cart.forEach(item => {
-                subtotal += item.price;
-                let displayName = `ELEVEN Piece #${item.idNum}`;
-                
-                container.innerHTML += `
-                <div class="cart-item">
-                    <div class="cart-item-details">
-                        <b>${displayName}</b>
-                        <div class="cart-item-size-editor">
-                            <button class="cart-size-edit-btn ${item.size === 'M' ? 'active' : ''}" onclick="updateCartItemSize(${item.id}, 'M')">M</button>
-                            <button class="cart-size-edit-btn ${item.size === 'L' ? 'active' : ''}" onclick="updateCartItemSize(${item.id}, 'L')">L</button>
-                            <button class="cart-size-edit-btn ${item.size === 'XL' ? 'active' : ''}" onclick="updateCartItemSize(${item.id}, 'XL')">XL</button>
-                        </div>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <span>${item.price} EGP</span>
-                        <button class="remove-item-btn" onclick="removeFromCart(${item.id})">✕</button>
-                    </div>
-                </div>`;
-            });
-            
-            if(discount > 0) subtotal = subtotal - (subtotal * discount);
-            
-            const shippingSelect = document.getElementById('shippingLocation');
-            let shippingCost = 0;
-            if(shippingSelect && shippingSelect.value !== "0") {
-                shippingCost = parseInt(shippingSelect.value) || 0;
-            }
-            
-            let finalTotal = subtotal + shippingCost;
-            
-            document.getElementById('cart-count').innerText = cart.length;
-            document.getElementById('cart-subtotal-val').innerText = Math.round(subtotal);
-            document.getElementById('cart-shipping-val').innerText = shippingCost;
-            document.getElementById('cart-total').innerText = Math.round(finalTotal);
-        }
-
-        function checkoutWhatsApp() {
-            if (cart.length === 0) return alert(currentLang === 'en' ? "Bag is empty" : "الحقيبة فارغة");
-            
-            const name = document.getElementById('custName').value.trim();
-            const phone = document.getElementById('custPhone').value.trim();
-            const address = document.getElementById('custAddress').value.trim();
-            const shippingSelect = document.getElementById('shippingLocation');
-            const payment = document.getElementById('paymentMethod').value;
-            
-            if(!name || !phone || !address || shippingSelect.value === "0") {
-                alert(translations[currentLang].formError);
-                return;
-            }
-            
-            const govName = shippingSelect.options[shippingSelect.selectedIndex].text.split(" (")[0];
-            const shippingVal = document.getElementById('cart-shipping-val').innerText;
-            const subtotalVal = document.getElementById('cart-subtotal-val').innerText;
-            const totalVal = document.getElementById('cart-total').innerText;
-
-            let itemsText = "";
-            cart.forEach((item, index) => {
-                itemsText += `[${index + 1}] PIECE #${item.idNum} | Size: ${item.size} | Price: ${item.price} EGP \n`;
-            });
-
-            // 1. إرسال الأوردر أوتوماتيكياً إلى لوحة تحكم Formspree في الخلفية
-            const endpointURL = "https://formspree.io/f/xjgzkzde"; 
-            
-            const payload = new FormData();
-            payload.append("الاسم", name);
-            payload.append("رقم الواتساب", phone);
-            payload.append("المحافظة", govName);
-            payload.append("العنوان بالتفصيل", address);
-            payload.append("القطع المطلوبة", itemsText);
-            payload.append("طريقة الدفع", payment);
-            payload.append("إجمالي الفاتورة", `${totalVal} EGP`);
-
-            fetch(endpointURL, {
-                method: "POST",
-                body: payload,
-                headers: { 'Accept': 'application/json' }
-            }).then(() => {
-                console.log("Success! Saved to formspree.");
-            }).catch(err => console.error("Error sending data:", err));
-
-            // 2. إرسال الأوردر إلى شات الواتساب لتأكيد الشحن فوراً
-            let msg = `====== NEW ORDER (ELEVEN) ======%0A%0A`;
-            msg += `--- CUSTOMER DETAILS ---%0A`;
-            msg += `• Name: ${name}%0A`;
-            msg += `• WhatsApp: ${phone}%0A`;
-            msg += `• Governorate: ${govName}%0A`;
-            msg += `• Address: ${address}%0A`;
-            msg += `• Payment Method: ${payment}%0A%0A`;
-            
-            msg += `--- ORDERED PIECES ---%0A`;
-            cart.forEach((item, index) => {
-                msg += `${index + 1}. • Product: ELEVEN PIECE %23${item.idNum} | Size: ${item.size} | Price: ${item.price} EGP%0A`;
-            });
-            
-            msg += `%0A--- FINAL RECEIPT ---%0A`;
-            msg += `• Items Subtotal: ${subtotalVal} EGP%0A`;
-            msg += `• Shipping Cost: ${shippingVal} EGP%0A`;
-            msg += `• TOTAL BILL: ${totalVal} EGP%0A`;
-            msg += `============================`;
-            
-            window.open(`https://wa.me/201062910161?text=${msg}`, '_blank');
-        }
-    </script>
-</body>
-</html>
+        function renderProducts
