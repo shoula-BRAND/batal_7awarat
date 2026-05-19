@@ -23,7 +23,6 @@
             --accent: #25d366; 
             --sale: #e63946;
             --text-muted: #888;
-            --gold: #ffd700;
         }
 
         /* Light Mode Variables Override */
@@ -138,9 +137,6 @@
         .new-price { color: var(--sale); font-weight: bold; }
         .viewer-count { font-size: 0.75rem; color: #25d366; margin-top: 5px; font-weight: bold; display: flex; align-items: center; gap: 5px;}
 
-        /* Coins Preview Box */
-        .coins-preview { font-size: 0.8rem; color: var(--gold); margin-top: 5px; font-weight: bold; display: flex; align-items: center; gap: 5px; }
-
         .size-selector { display: flex; gap: 8px; margin: 15px 0; }
         .size-btn { flex: 1; padding: 8px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--text-color); font-weight: bold; transition: 0.2s; }
         .size-btn.selected { background: var(--text-color); color: var(--bg-color); border-color: var(--text-color); }
@@ -178,9 +174,6 @@
         .promo-container { display: flex; gap: 10px; margin-bottom: 20px; }
         .promo-input { margin-bottom: 0; }
 
-        /* Rewards Box in Cart */
-        .rewards-summary-box { background: #111; border: 1px dashed var(--gold); padding: 15px; margin-bottom: 20px; text-align: center; font-size: 0.9rem; }
-
         .social-links { display: flex; justify-content: center; gap: 40px; margin-bottom: 40px; }
         .social-links a { color: var(--text-color); text-decoration: none; font-size: 0.8rem; letter-spacing: 3px; opacity: 0.5; transition: 0.3s; }
         .social-links a:hover { opacity: 1; }
@@ -201,7 +194,7 @@
     </div>
 
     <nav>
-        <div style="font-weight:900; letter-spacing:4px; cursor:pointer;" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">ELEVEN</div>
+        <div style="font-weight:900; letter-spacing:4px; cursor:pointer;" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">ELEVEN </div>
         <div class="nav-links">
             <div class="nav-btn" id="themeBtn" onclick="toggleTheme()" style="font-size: 1.1rem;">🌙</div>
             <div class="nav-btn" id="langBtn" onclick="toggleLanguage()" style="color:#25d366;">AR</div>
@@ -275,12 +268,7 @@
         
         <div id="cart-items"></div>
         
-        <div class="rewards-summary-box">
-            <span id="rewards-box-txt" style="color: var(--gold); font-weight: bold;">🪙 ELEVEN COINS REWARDS:</span>
-            <div style="margin-top:5px; font-size:0.8rem; opacity:0.9;" id="rewards-box-desc">You will earn <span id="earned-coins-val" style="color:var(--gold); font-weight:bold;">0</span> Coins from this order! (Worth <span id="earned-cash-val" style="color:#25d366; font-weight:bold;">0</span> EGP Cashback for next order)</div>
-        </div>
-
-        <div class="promo-container">
+        <div class="promo-container" style="margin-top: 15px;">
             <input type="text" id="promoInput" class="promo-input" placeholder="Promo Code (ELEVEN10)">
             <button class="filter-btn" style="padding:0 15px;" id="promo-btn-txt" onclick="applyPromo()">APPLY</button>
         </div>
@@ -362,10 +350,7 @@
                 subtotal: "المجموع الفرعي:",
                 shippingCost: "تكلفة الشحن:",
                 selectGov: "اختر المحافظة (لتحديد تكلفة الشحن)",
-                formError: "من فضلك املأ جميع بيانات الشحن بالتفصيل يا بطل!",
-                coinEarnHint: "🪙 هتكسب {coins} كوينز من القطعة دي!",
-                rewardsTitle: "🪙 مكافآت ونقاط إيلافن كوينز:",
-                rewardsDesc: "هتكسب {coins} كوينز من الأوردر ده! (تساوي {cash} جنيه كاش باك للأوردر الجاي)"
+                formError: "من فضلك املأ جميع بيانات الشحن بالتفصيل يا بطل!"
             },
             en: {
                 announcement: "FLASH SALE FOR A LIMITED TIME! ENDS IN:",
@@ -398,10 +383,7 @@
                 subtotal: "Subtotal:",
                 shippingCost: "Shipping Cost:",
                 selectGov: "Select Governorate (Shipping Location)",
-                formError: "Please fill out all shipping details first!",
-                coinEarnHint: "🪙 You will earn {coins} Eleven Coins!",
-                rewardsTitle: "🪙 ELEVEN COINS REWARDS:",
-                rewardsDesc: "You will earn {coins} Coins from this order! (Worth {cash} EGP Cashback for next order)"
+                formError: "Please fill out all shipping details first!"
             }
         };
 
@@ -433,7 +415,6 @@
             document.getElementById('custAddress').placeholder = translations[currentLang].addr;
             document.getElementById('subtotal-txt').innerText = translations[currentLang].subtotal;
             document.getElementById('shipping-txt').innerText = translations[currentLang].shippingCost;
-            document.getElementById('rewards-box-txt').innerText = translations[currentLang].rewardsTitle;
 
             setupLoginUI();
             renderProducts(selectedItems);
@@ -503,7 +484,6 @@
                 const randomViewers = Math.floor(Math.random() * 15) + 8;
                 const isFav = wishlist.includes(i) ? 'active' : '';
                 const viewerText = translations[currentLang].viewing.replace("{num}", randomViewers);
-                const coinHintText = translations[currentLang].coinEarnHint.replace("{coins}", "55");
 
                 const card = document.createElement('div');
                 card.className = 'product-card';
@@ -524,7 +504,6 @@
                         </div>
                     </div>
                     <div class="viewer-count">${viewerText}</div>
-                    <div class="coins-preview">${coinHintText}</div>
                     <div class="size-selector" id="size-group-${i}">
                         <button class="size-btn" onclick="event.stopPropagation(); selectSize(this, 'M', ${i})">M</button>
                         <button class="size-btn" onclick="event.stopPropagation(); selectSize(this, 'L', ${i})">L</button>
@@ -623,11 +602,6 @@
                 discount = 0.10;
                 alert(translations[currentLang].promoSuccess);
                 updateCart();
-            } else if(code.startsWith("11COIN-")) {
-                // تفعيل كاش باك الكوينز يدوياً لو معاه كود سري من أوردر قديم
-                discount = 0.15; // خصم كاش باك خاص بالكوينز 15%
-                alert(currentLang === 'en' ? "Eleven Coins Loyalty Code Applied! 15% Off!" : "تم تفعيل كود كاش باك كوينز Eleven بنجاح! خصم 15%!");
-                updateCart();
             } else {
                 alert(translations[currentLang].promoFail);
             }
@@ -688,16 +662,6 @@
                     </div>
                 </div>`;
             });
-
-            // حساب كوينز الكاش باك: كل قطعة بتدي 55 كوينز (تساوي 55 جنيه للأوردر الجاي)
-            let calculatedCoins = cart.length * 55;
-            let calculatedCash = cart.length * 55;
-            
-            document.getElementById('earned-coins-val').innerText = calculatedCoins;
-            document.getElementById('earned-cash-val').innerText = calculatedCash;
-            
-            let rewardsText = translations[currentLang].rewardsDesc.replace("{coins}", calculatedCoins).replace("{cash}", calculatedCash);
-            document.getElementById('rewards-box-desc').innerHTML = rewardsText;
             
             if(discount > 0) subtotal = subtotal - (subtotal * discount);
             
@@ -734,10 +698,6 @@
             const subtotalVal = document.getElementById('cart-subtotal-val').innerText;
             const totalVal = document.getElementById('cart-total').innerText;
 
-            // توليد كود كاش باك سري وفريد للأوردر القادم بناءً على عدد القطع
-            let totalCoinsEarned = cart.length * 55;
-            let secretLoyaltyCode = `11COIN-${Math.floor(1000 + Math.random() * 9000)}`;
-
             let itemsText = "";
             cart.forEach((item, index) => {
                 itemsText += `[${index + 1}] PIECE #${item.idNum} | Size: ${item.size} | Price: ${item.price} EGP \n`;
@@ -754,18 +714,16 @@
             payload.append("القطع المطلوبة", itemsText);
             payload.append("طريقة الدفع", payment);
             payload.append("إجمالي الفاتورة", `${totalVal} EGP`);
-            payload.append("الكوينز المكتسبة", `${totalCoinsEarned} Coins`);
-            payload.append("كود الكاش باك السري", secretLoyaltyCode);
 
             fetch(endpointURL, {
                 method: "POST",
                 body: payload,
                 headers: { 'Accept': 'application/json' }
             }).then(() => {
-                console.log("Success! Saved to formspree dashboard.");
+                console.log("Success! Saved to formspree.");
             }).catch(err => console.error("Error sending data:", err));
 
-            // 2. إرسال الأوردر إلى شات الواتساب لتأكيد الشحن فوراً مع تفاصيل المكافأة
+            // 2. إرسال الأوردر إلى شات الواتساب لتأكيد الشحن فوراً
             let msg = `====== NEW ORDER (ELEVEN) ======%0A%0A`;
             msg += `--- CUSTOMER DETAILS ---%0A`;
             msg += `• Name: ${name}%0A`;
@@ -779,11 +737,7 @@
                 msg += `${index + 1}. • Product: ELEVEN PIECE %23${item.idNum} | Size: ${item.size} | Price: ${item.price} EGP%0A`;
             });
             
-            msg += `%0A--- COINS REWARDS LOYALTY ---%0A`;
-            msg += `• Earned Coins: +${totalCoinsEarned} Coins%0A`;
-            msg += `• Next Order Cashback Code: ${secretLoyaltyCode}%0A%0A`;
-
-            msg += `--- FINAL RECEIPT ---%0A`;
+            msg += `%0A--- FINAL RECEIPT ---%0A`;
             msg += `• Items Subtotal: ${subtotalVal} EGP%0A`;
             msg += `• Shipping Cost: ${shippingVal} EGP%0A`;
             msg += `• TOTAL BILL: ${totalVal} EGP%0A`;
