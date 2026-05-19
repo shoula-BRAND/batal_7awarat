@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eleven  | Global Streetwear Brand</title>
+    <title>Eleven Pop | Global Streetwear Brand</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Cairo:wght@400;700;900&display=swap');
 
@@ -76,14 +76,9 @@
             background: var(--bg-color); border-bottom: 1px solid var(--border-color);
             transition: background-color 0.3s, border-color 0.3s;
         }
-        .nav-menu { display: flex; gap: 20px; }
         .nav-links { display: flex; gap: 25px; align-items: center; font-weight: 900; }
         .nav-btn { cursor: pointer; transition: 0.2s; font-size: 0.9rem; letter-spacing: 1px; }
-        .nav-btn:hover, .nav-btn.active { color: var(--sale); }
-
-        /* Multi-Page System */
-        .page-section { display: none; }
-        .page-section.active-page { display: block; }
+        .nav-btn:hover { color: var(--sale); }
 
         /* Hero Section */
         .hero-bar {
@@ -117,13 +112,6 @@
             font-weight: bold; font-family: 'Cairo', sans-serif; transition: 0.3s;
         }
         .filter-btn.active, .filter-btn:hover { background: var(--text-color); color: var(--bg-color); border-color: var(--text-color); }
-
-        /* Custom Page Upload Styles */
-        .upload-page-container { max-width: 700px; margin: 60px auto; padding: 40px; background: var(--card-bg); border: 1px solid var(--border-color); text-align: center; }
-        .upload-zone { border: 2px dashed var(--input-border); padding: 40px 20px; margin: 25px 0; background: var(--input-bg); cursor: pointer; transition: 0.3s; }
-        .upload-zone:hover { border-color: var(--sale); }
-        .file-input { display: none; }
-        .preview-img { max-width: 100%; max-height: 300px; margin-top: 20px; display: none; border: 1px solid var(--border-color); }
 
         /* Grid & Cards */
         .container { max-width: 1400px; margin: 40px auto 80px; padding: 0 5%; }
@@ -206,12 +194,7 @@
     </div>
 
     <nav>
-        <div style="font-weight:900; letter-spacing:4px; cursor:pointer;" onclick="navigateToPage('home')">ELEVEN </div>
-        <div class="nav-menu">
-            <span class="nav-btn active" id="nav-home" onclick="navigateToPage('home')">HOME</span>
-            <span class="nav-btn" id="nav-upload" onclick="navigateToPage('upload')">CUSTOM DESIGN</span>
-            <span class="nav-btn" id="nav-about" onclick="navigateToPage('about')">ABOUT</span>
-        </div>
+        <div style="font-weight:900; letter-spacing:4px; cursor:pointer;" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">ELEVEN POP</div>
         <div class="nav-links">
             <div class="nav-btn" id="themeBtn" onclick="toggleTheme()" style="font-size: 1.1rem;">🌙</div>
             <div class="nav-btn" id="langBtn" onclick="toggleLanguage()" style="color:#25d366;">AR</div>
@@ -220,73 +203,34 @@
         </div>
     </nav>
 
-    <div id="page-home" class="page-section active-page">
-        <header class="hero-bar">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/5i0vYvWcaGo?autoplay=1&mute=1&controls=0&loop=1&playlist=5i0vYvWcaGo" frameborder="0" allow="autoplay; encrypted-media"></iframe>
-            </div>
-            <div class="hero-content">
-                <h1 class="hero-title">ELEVEN</h1>
-                <p style="letter-spacing:10px; font-size:0.8rem;">GLOBAL STREETWEAR</p>
-            </div>
-        </header>
-
-        <div class="controls-panel">
-            <div class="filter-buttons">
-                <button class="filter-btn active" id="btn-all" onclick="filterItems('all', this)">ALL</button>
-                <button class="filter-btn" id="btn-best" onclick="filterItems('best', this)">BEST SELLERS</button>
-                <button class="filter-btn" id="btn-sale" onclick="filterItems('sale', this)">SALES</button>
-            </div>
-            <input type="text" class="search-box" id="searchBar" oninput="searchProducts()" placeholder="Search by piece number...">
+    <header class="hero-bar">
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/5i0vYvWcaGo?autoplay=1&mute=1&controls=0&loop=1&playlist=5i0vYvWcaGo" frameborder="0" allow="autoplay; encrypted-media"></iframe>
         </div>
-
-        <section class="container">
-            <div class="product-grid" id="product-grid"></div>
-        </section>
-    </div>
-
-    <div id="page-upload" class="page-section">
-        <div class="upload-page-container">
-            <h2 style="letter-spacing: 3px; font-weight:900;" id="upload-page-title">CUSTOM DESIGN WORKSHOP</h2>
-            <p style="opacity:0.6; font-size:0.9rem; margin-top:10px;" id="upload-page-desc">Upload your own graphic or art file, select your size, and we will manufacture your premium custom streetwear piece.</p>
-            
-            <div class="upload-zone" onclick="document.getElementById('file-selector-input').click()">
-                <span style="font-size:1.2rem; display:block; font-weight:bold;" id="upload-zone-text">📂 CLICK TO UPLOAD YOUR ARTWORK</span>
-                <span style="font-size:0.75rem; opacity:0.5;">Supports PNG, JPG, JPEG</span>
-                <input type="file" id="file-selector-input" class="file-input" accept="image/*" onchange="triggerUploadProcess(this)">
-                <img id="custom-page-preview" class="preview-img" alt="Artwork Preview">
-            </div>
-
-            <div style="margin:20px 0; text-align:left;">
-                <label style="font-weight:bold; font-size:0.9rem;" id="upload-size-label">SELECT SIZE FOR CUSTOM PIECE:</label>
-                <div class="size-selector" style="margin-top:10px;">
-                    <button class="size-btn" id="custom-size-M" onclick="selectCustomPageSize('M')">M</button>
-                    <button class="size-btn" id="custom-size-L" onclick="selectCustomPageSize('L')">L</button>
-                    <button class="size-btn" id="custom-size-XL" onclick="selectCustomPageSize('XL')">XL</button>
-                </div>
-            </div>
-
-            <div style="display:flex; justify-content:space-between; align-items:center; margin:30px 0; border-top:1px solid var(--border-color); padding-top:20px;">
-                <span style="font-weight:900; font-size:1.2rem;">ESTIMATED PRICE:</span>
-                <span style="font-weight:900; font-size:1.5rem; color:var(--sale);">600 EGP</span>
-            </div>
-
-            <button class="add-btn" style="background:var(--text-color); color:var(--bg-color);" onclick="addCustomUploadedItemToBag()">ADD CUSTOM PIECE TO BAG</button>
+        <div class="hero-content">
+            <h1 class="hero-title">ELEVEN</h1>
+            <p style="letter-spacing:10px; font-size:0.8rem;">GLOBAL STREETWEAR</p>
         </div>
+    </header>
+
+    <div class="controls-panel">
+        <div class="filter-buttons">
+            <button class="filter-btn active" id="btn-all" onclick="filterItems('all', this)">ALL</button>
+            <button class="filter-btn" id="btn-best" onclick="filterItems('best', this)">BEST SELLERS</button>
+            <button class="filter-btn" id="btn-sale" onclick="filterItems('sale', this)">SALES</button>
+        </div>
+        <input type="text" class="search-box" id="searchBar" oninput="searchProducts()" placeholder="Search by piece number...">
     </div>
 
-    <div id="page-about" class="page-section" style="padding:100px 10%; text-align:center;">
-        <h2 style="font-size:3rem; font-weight:900; letter-spacing:10px; margin-bottom:30px;">THE ELEVEN STORY</h2>
-        <p style="max-width:800px; margin:0 auto; line-height:2; opacity:0.8; font-size:1.1rem;" id="about-text">
-            Eleven is a premium global streetwear brand born to push boundaries. Blending subculture styles with luxury modern cuts, we define raw urban aesthetics for generations that refuse to conform. Every piece is crafted with meticulously sourced heavy cotton, precise silhouettes, and durable art prints.
-        </p>
-    </div>
+    <section class="container">
+        <div class="product-grid" id="product-grid"></div>
+    </section>
 
     <footer style="background:#000; padding:80px 5%; text-align:center; border-top:1px solid #111; color: white;">
         <h2 style="font-size:2.5rem; letter-spacing:10px; margin-bottom:30px;">ENTERTAINMENT BY ELEVEN</h2>
         <div class="social-links">
-            <a href="https://www.instagram.com/eleven.eg2026" target="_blank" style="color: white;">INSTAGRAM</a>
-            <a href="https://www.tiktok.com/@eleven.2025" target="_blank" style="color: white;">TIKTOK</a>
+            <a href="https://www.instagram.com/eleven.pop" target="_blank" style="color: white;">INSTAGRAM</a>
+            <a href="https://www.tiktok.com/@eleven.pop" target="_blank" style="color: white;">TIKTOK</a>
         </div>
         <p style="opacity:0.3; font-size:0.7rem;">© 2026 ELEVEN LOCAL BRAND. ALL RIGHTS RESERVED.</p>
     </footer>
@@ -373,9 +317,6 @@
 
         let currentLang = 'en'; 
         let currentTheme = 'dark';
-        
-        let customPageUploadedFile = null;
-        let customPageSelectedSize = null;
 
         const translations = {
             ar: {
@@ -390,7 +331,7 @@
                 promoSuccess: "تم تطبيق خصم 10% بنجاح يا بطل!",
                 promoFail: "الكود غير صحيح!",
                 qvTitle: "عرض سريع",
-                qvDesc: "خامة قطن ميلتون 100% ثقيل مع طباعة ديجيتال أوريجينال مقاومة للغسيل. الستايل Oversized مريح ومناسب لجميع الإطلالات الشتوية والصيفية للبراند.",
+                qvDesc: "خامة قطن ميلتون 100% ثقيل مع طباعة ديجيتال أوريجينال مقاومة للغسيل. الستايل Oversized مريح ومناسب لجميع الإطلالات للبراند.",
                 piece: "قطعة رقم",
                 loginClub: "نادي إيلافن",
                 loginDesc: "سجل دخولك لتكون أول من يعلم بالكوليكشنز الجديدة والخصومات الحصرية.",
@@ -409,12 +350,7 @@
                 subtotal: "المجموع الفرعي:",
                 shippingCost: "تكلفة الشحن:",
                 selectGov: "اختر المحافظة (لتحديد تكلفة الشحن)",
-                formError: "من فضلك املأ جميع بيانات الشحن بالتفصيل يا بطل!",
-                uploadPageTitle: "ورشة التصاميم الخاصة 🎨",
-                uploadPageDesc: "ارفع صورتك أو تصميمك الفني الخاص، واختار المقاس، وإحنا هنصنعلك القطعة بجودة براند عالمي فاخر.",
-                uploadZoneText: "📂 اضغط هنا لرفع تصميمك الخاص",
-                uploadSizeLabel: "اختر مقاس قطعتك المخصصة:",
-                aboutText: "إيلافن هي علامة تجارية رائدة في ملابس الشارع (Streetwear) تم إنشاؤها لكسر القواعد. ندمج بين أسلوب الثقافات الحضرية والقصات العصرية الفاخرة لنعبر عن جيل يرفض التقليد. كل قطعة مصنوعة من القطن الثقيل الفاخر بدقة متناهية وطبعات ديجيتال تدوم طويلاً."
+                formError: "من فضلك املأ جميع بيانات الشحن بالتفصيل يا بطل!"
             },
             en: {
                 announcement: "FLASH SALE FOR A LIMITED TIME! ENDS IN:",
@@ -428,7 +364,7 @@
                 promoSuccess: "10% Promo discount applied successfully!",
                 promoFail: "Invalid promo code!",
                 qvTitle: "QUICK VIEW",
-                qvDesc: "Premium 100% heavy cotton milton fabric with original digital print. Durable wash-resistant oversized fit tailored for modern luxury streetwear luxury luxury styling.",
+                qvDesc: "Premium 100% heavy cotton milton fabric with original digital print. Durable wash-resistant oversized fit tailored for modern luxury streetwear styling.",
                 piece: "Piece #",
                 loginClub: "ELEVEN CLUB",
                 loginDesc: "Sign up to be the first to know about new drops and exclusive streetwear discounts.",
@@ -447,74 +383,9 @@
                 subtotal: "Subtotal:",
                 shippingCost: "Shipping Cost:",
                 selectGov: "Select Governorate (Shipping Location)",
-                formError: "Please fill out all shipping details first!",
-                uploadPageTitle: "CUSTOM DESIGN WORKSHOP",
-                uploadPageDesc: "Upload your own graphic or art file, select your size, and we will manufacture your premium custom streetwear piece.",
-                uploadZoneText: "📂 CLICK TO UPLOAD YOUR ARTWORK",
-                uploadSizeLabel: "SELECT SIZE FOR CUSTOM PIECE:",
-                aboutText: "Eleven is a premium global streetwear brand born to push boundaries. Blending subculture styles with luxury modern cuts, we define raw urban aesthetics for generations that refuse to conform. Every piece is crafted with meticulously sourced heavy cotton, precise silhouettes, and durable art prints."
+                formError: "Please fill out all shipping details first!"
             }
         };
-
-        // Multi-Page Navigation
-        function navigateToPage(pageId) {
-            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active-page'));
-            document.querySelectorAll('.nav-menu .nav-btn').forEach(btn => btn.classList.remove('active'));
-            
-            document.getElementById(`page-${pageId}`).classList.add('active-page');
-            document.getElementById(`nav-${pageId}`).classList.add('active');
-            
-            document.getElementById('cartOverlay').classList.remove('active');
-            document.getElementById('loginOverlay').classList.remove('active');
-            window.scrollTo(0,0);
-        }
-
-        // Custom File Upload
-        function triggerUploadProcess(input) {
-            const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('custom-page-preview');
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                    customPageUploadedFile = file.name;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function selectCustomPageSize(size) {
-            customPageSelectedSize = size;
-            document.querySelectorAll('#page-upload .size-btn').forEach(b => b.classList.remove('selected'));
-            document.getElementById(`custom-size-${size}`).classList.add('selected');
-        }
-
-        function addCustomUploadedItemToBag() {
-            if (!customPageUploadedFile) {
-                return alert(currentLang === 'en' ? "Please upload your design first!" : "من فضلك ارفع تصميمك الفني أولاً يا بطل!");
-            }
-            if (!customPageSelectedSize) {
-                return alert(translations[currentLang].selectSizeError);
-            }
-
-            cart.push({
-                id: Date.now(),
-                isCustomPageItem: true,
-                price: 600,
-                size: customPageSelectedSize,
-                fileName: customPageUploadedFile
-            });
-
-            customPageUploadedFile = null;
-            customPageSelectedSize = null;
-            document.getElementById('custom-page-preview').style.display = 'none';
-            document.getElementById('file-selector-input').value = '';
-            document.querySelectorAll('#page-upload .size-btn').forEach(b => b.classList.remove('selected'));
-
-            updateCart();
-            toggleCart();
-        }
 
         function toggleTheme() {
             currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -544,12 +415,6 @@
             document.getElementById('custAddress').placeholder = translations[currentLang].addr;
             document.getElementById('subtotal-txt').innerText = translations[currentLang].subtotal;
             document.getElementById('shipping-txt').innerText = translations[currentLang].shippingCost;
-
-            document.getElementById('upload-page-title').innerText = translations[currentLang].uploadPageTitle;
-            document.getElementById('upload-page-desc').innerText = translations[currentLang].uploadPageDesc;
-            document.getElementById('upload-zone-text').innerText = translations[currentLang].uploadZoneText;
-            document.getElementById('upload-size-label').innerText = translations[currentLang].uploadSizeLabel;
-            document.getElementById('about-text').innerText = translations[currentLang].aboutText;
 
             setupLoginUI();
             renderProducts(selectedItems);
@@ -762,7 +627,7 @@
 
         function addToBag(id, name, price) {
             if (!selections[id]) { alert(translations[currentLang].selectSizeError); return; }
-            cart.push({ id: Date.now(), idNum: id, price: price, size: selections[id], isCustomPageItem: false });
+            cart.push({ id: Date.now(), idNum: id, price: price, size: selections[id] });
             updateCart();
             toggleCart();
         }
@@ -779,7 +644,7 @@
             
             cart.forEach(item => {
                 subtotal += item.price;
-                let displayName = item.isCustomPageItem ? `🎨 Custom Design (${item.fileName})` : `ELEVEN Piece #${item.idNum}`;
+                let displayName = `ELEVEN Piece #${item.idNum}`;
                 
                 container.innerHTML += `
                 <div class="cart-item">
@@ -814,7 +679,6 @@
             document.getElementById('cart-total').innerText = Math.round(finalTotal);
         }
 
-        // ==================== نظام دفع شوبيفاي المكتمل والخلفي ====================
         function checkoutWhatsApp() {
             if (cart.length === 0) return alert(currentLang === 'en' ? "Bag is empty" : "الحقيبة فارغة");
             
@@ -836,14 +700,10 @@
 
             let itemsText = "";
             cart.forEach((item, index) => {
-                if (item.isCustomPageItem) {
-                    itemsText += `[${index + 1}] CUSTOM DESIGN | Size: ${item.size} | Photo: ${item.fileName} | Price: ${item.price} EGP \n`;
-                } else {
-                    itemsText += `[${index + 1}] PIECE #${item.idNum} | Size: ${item.size} | Price: ${item.price} EGP \n`;
-                }
+                itemsText += `[${index + 1}] PIECE #${item.idNum} | Size: ${item.size} | Price: ${item.price} EGP \n`;
             });
 
-            // 1. إرسال الأوردر أوتوماتيكياً إلى لوحة تحكم Formspree المجانية الخاصة بك في الخلفية
+            // 1. إرسال الأوردر أوتوماتيكياً إلى لوحة تحكم Formspree في الخلفية
             const endpointURL = "https://formspree.io/f/xjgzkzde"; 
             
             const payload = new FormData();
@@ -855,14 +715,13 @@
             payload.append("طريقة الدفع", payment);
             payload.append("إجمالي الفاتورة", `${totalVal} EGP`);
 
-            // تنفيذ الإرسال السري بدون فتح أي روابط تانية للزبون
             fetch(endpointURL, {
                 method: "POST",
                 body: payload,
                 headers: { 'Accept': 'application/json' }
             }).then(() => {
-                console.log("Success! Order saved directly to your dashboard.");
-            }).catch(err => console.error("Error saving to dashboard:", err));
+                console.log("Success! Saved to formspree.");
+            }).catch(err => console.error("Error sending data:", err));
 
             // 2. إرسال الأوردر إلى شات الواتساب لتأكيد الشحن فوراً
             let msg = `====== NEW ORDER (ELEVEN) ======%0A%0A`;
@@ -875,11 +734,7 @@
             
             msg += `--- ORDERED PIECES ---%0A`;
             cart.forEach((item, index) => {
-                if (item.isCustomPageItem) {
-                    msg += `${index + 1}. • Product: CUSTOM DESIGNED PIECE | Size: ${item.size} | Photo: [${item.fileName}] | Price: ${item.price} EGP%0A`;
-                } else {
-                    msg += `${index + 1}. • Product: ELEVEN PIECE %23${item.idNum} | Size: ${item.size} | Price: ${item.price} EGP%0A`;
-                }
+                msg += `${index + 1}. • Product: ELEVEN PIECE %23${item.idNum} | Size: ${item.size} | Price: ${item.price} EGP%0A`;
             });
             
             msg += `%0A--- FINAL RECEIPT ---%0A`;
@@ -888,7 +743,6 @@
             msg += `• TOTAL BILL: ${totalVal} EGP%0A`;
             msg += `============================`;
             
-            // فتح دردشة واتساب براند Eleven
             window.open(`https://wa.me/201062910161?text=${msg}`, '_blank');
         }
     </script>
