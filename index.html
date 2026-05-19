@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eleven Pop | Global Streetwear Brand</title>
+    <title>Eleven  | Global Streetwear Brand</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Cairo:wght@400;700;900&display=swap');
 
@@ -190,6 +190,9 @@
         .social-links a { color: var(--text-color); text-decoration: none; font-size: 0.8rem; letter-spacing: 3px; opacity: 0.5; transition: 0.3s; }
         .social-links a:hover { opacity: 1; }
 
+        .sales-notification { position: fixed; bottom: 20px; left: -400px; background: var(--panel-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 15px 25px; border-radius: 4px; z-index: 9999; transition: 0.5s; }
+        .sales-notification.active { left: 20px; }
+
         html[dir="rtl"] body { direction: rtl; }
         html[dir="ltr"] body { direction: ltr; }
         @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
@@ -206,7 +209,7 @@
     </div>
 
     <nav>
-        <div style="font-weight:900; letter-spacing:4px; cursor:pointer;" onclick="navigateToPage('home')">ELEVEN POP</div>
+        <div style="font-weight:900; letter-spacing:4px; cursor:pointer;" onclick="navigateToPage('home')">ELEVEN </div>
         <div class="nav-menu">
             <span class="nav-btn active" id="nav-home" onclick="navigateToPage('home')">HOME</span>
             <span class="nav-btn" id="nav-upload" onclick="navigateToPage('upload')">CUSTOM DESIGN</span>
@@ -285,8 +288,8 @@
     <footer style="background:#000; padding:80px 5%; text-align:center; border-top:1px solid #111; color: white;">
         <h2 style="font-size:2.5rem; letter-spacing:10px; margin-bottom:30px;">ELEVEN</h2>
         <div class="social-links">
-            <a href="https://www.instagram.com/eleven.pop" target="_blank" style="color: white;">INSTAGRAM</a>
-            <a href="https://www.tiktok.com/@eleven.pop" target="_blank" style="color: white;">TIKTOK</a>
+            <a href="https://www.instagram.com/eleven.eg2026" target="_blank" style="color: white;">INSTAGRAM</a>
+            <a href="https://www.tiktok.com/@eleven.2025" target="_blank" style="color: white;">TIKTOK</a>
         </div>
         <p style="opacity:0.3; font-size:0.7rem;">© 2026 ELEVEN LOCAL BRAND. ALL RIGHTS RESERVED.</p>
     </footer>
@@ -374,6 +377,7 @@
         let currentLang = 'en'; 
         let currentTheme = 'dark';
         
+        // متغيرات حفظ تصميم صفحة الرفع المخصصة
         let customPageUploadedFile = null;
         let customPageSelectedSize = null;
 
@@ -410,6 +414,8 @@
                 shippingCost: "تكلفة الشحن:",
                 selectGov: "اختر المحافظة (لتحديد تكلفة الشحن)",
                 formError: "من فضلك املأ جميع بيانات الشحن بالتفصيل يا بطل!",
+                
+                // ترجمة صفحات الملتي بيج والرفع الجديدة
                 uploadPageTitle: "ورشة التصاميم الخاصة 🎨",
                 uploadPageDesc: "ارفع صورتك أو تصميمك الفني الخاص، واختار المقاس، وإحنا هنصنعلك القطعة بجودة براند عالمي فاخر.",
                 uploadZoneText: "📂 اضغط هنا لرفع تصميمك الخاص",
@@ -448,6 +454,7 @@
                 shippingCost: "Shipping Cost:",
                 selectGov: "Select Governorate (Shipping Location)",
                 formError: "Please fill out all shipping details first!",
+                
                 uploadPageTitle: "CUSTOM DESIGN WORKSHOP",
                 uploadPageDesc: "Upload your own graphic or art file, select your size, and we will manufacture your premium custom streetwear piece.",
                 uploadZoneText: "📂 CLICK TO UPLOAD YOUR ARTWORK",
@@ -456,20 +463,23 @@
             }
         };
 
-        // Multi-Page Navigation
+        // نظام التنقل بين الصفحات المتعددة (Multi-Page System JavaScript)
         function navigateToPage(pageId) {
+            // إخفاء كل الصفحات أولاً
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active-page'));
             document.querySelectorAll('.nav-menu .nav-btn').forEach(btn => btn.classList.remove('active'));
             
+            // إظهار الصفحة المطلوبة وتنشيط زر الـ Nav
             document.getElementById(`page-${pageId}`).classList.add('active-page');
             document.getElementById(`nav-${pageId}`).classList.add('active');
             
+            // إغلاق أي نافذة جانبية مفتوحة بالخطأ
             document.getElementById('cartOverlay').classList.remove('active');
             document.getElementById('loginOverlay').classList.remove('active');
             window.scrollTo(0,0);
         }
 
-        // Custom File Upload
+        // التعامل مع رفع الصورة في صفحة الديزاين الخاصة
         function triggerUploadProcess(input) {
             const file = input.files[0];
             if (file) {
@@ -498,6 +508,7 @@
                 return alert(translations[currentLang].selectSizeError);
             }
 
+            // إضافة التصميم المرفوع للسلة كمنتج خاص بسعر 600 جنيه
             cart.push({
                 id: Date.now(),
                 isCustomPageItem: true,
@@ -506,6 +517,7 @@
                 fileName: customPageUploadedFile
             });
 
+            // تصفير الخيارات بعد الإضافة بنجاح لتجهيز الصفحة لرفع أخر
             customPageUploadedFile = null;
             customPageSelectedSize = null;
             document.getElementById('custom-page-preview').style.display = 'none';
@@ -545,6 +557,7 @@
             document.getElementById('subtotal-txt').innerText = translations[currentLang].subtotal;
             document.getElementById('shipping-txt').innerText = translations[currentLang].shippingCost;
 
+            // تحديث نصوص صفحة الرفع التفاعلية الجديدة
             document.getElementById('upload-page-title').innerText = translations[currentLang].uploadPageTitle;
             document.getElementById('upload-page-desc').innerText = translations[currentLang].uploadPageDesc;
             document.getElementById('upload-zone-text').innerText = translations[currentLang].uploadZoneText;
@@ -779,6 +792,7 @@
             
             cart.forEach(item => {
                 subtotal += item.price;
+                // تخصيص شكل اسم وعرض المنتج في السلة بناءاً على ما إذا كان تصميم جاهز أو مرفوع من صفحة الـ Custom Page
                 let displayName = item.isCustomPageItem ? `🎨 Custom Design (${item.fileName})` : `ELEVEN Piece #${item.idNum}`;
                 
                 container.innerHTML += `
@@ -814,7 +828,6 @@
             document.getElementById('cart-total').innerText = Math.round(finalTotal);
         }
 
-        // دالة إرسال الأوردر لجوجل فورم والواتساب معاً
         function checkoutWhatsApp() {
             if (cart.length === 0) return alert(currentLang === 'en' ? "Bag is empty" : "الحقيبة فارغة");
             
@@ -834,16 +847,6 @@
             const subtotalVal = document.getElementById('cart-subtotal-val').innerText;
             const totalVal = document.getElementById('cart-total').innerText;
 
-            let itemsText = "";
-            cart.forEach((item, index) => {
-                if (item.isCustomPageItem) {
-                    itemsText += `[${index + 1}] CUSTOM DESIGN | Size: ${item.size} | Photo: ${item.fileName} | Price: ${item.price} EGP \n`;
-                } else {
-                    itemsText += `[${index + 1}] PIECE #${item.idNum} | Size: ${item.size} | Price: ${item.price} EGP \n`;
-                }
-            });
-
-            // تجهيز رسالة الواتساب المكتوبة للزبون
             let msg = `====== NEW ORDER (ELEVEN) ======%0A%0A`;
             msg += `--- CUSTOMER DETAILS ---%0A`;
             msg += `• Name: ${name}%0A`;
@@ -866,21 +869,8 @@
             msg += `• Shipping Cost: ${shippingVal} EGP%0A`;
             msg += `• TOTAL BILL: ${totalVal} EGP%0A`;
             msg += `============================`;
-
-            // ==================== الربط الأوتوماتيكي الذكي مع جوجل فورم ====================
-            const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeT2fRlPWL2mvwoLEIXLHjvjUZCGB3AaZ897AtLgZaTZFFFbA/viewform";
             
-            // تمرير البيانات في الرابط لتفتح مجهزة داخل صفحة الفورم للزبون
-            const queryParams = `?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&gov=${encodeURIComponent(govName)}&address=${encodeURIComponent(address)}&items=${encodeURIComponent(itemsText)}&pay=${encodeURIComponent(payment)}&total=${encodeURIComponent(totalVal + ' EGP')}`;
-            
-            // فتح صفحة جوجل فورم
-            window.open(formUrl + queryParams, '_blank');
-            // =========================================================================
-            
-            // فتح شات الواتساب الخاص بك بعد ثانية واحدة تلقائياً
-            setTimeout(() => {
-                window.open(`https://wa.me/201062910161?text=${msg}`, '_blank');
-            }, 1000);
+            window.open(`https://wa.me/201062910161?text=${msg}`, '_blank');
         }
     </script>
 </body>
