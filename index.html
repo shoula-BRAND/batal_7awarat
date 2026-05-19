@@ -69,38 +69,38 @@
             justify-content: center; gap: 15px; z-index: 101; position: relative;
         }
 
-        /* Hero Section */
-        .hero-bar {
-            width: 100%; height: 80vh; position: relative;
-            background: var(--black); display: flex; justify-content: center;
-            align-items: center; overflow: hidden;
-        }
-        .video-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 1;
-        }
-        .video-container iframe {
-            width: 100%; height: 100%;
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            filter: brightness(0.3) grayscale(0.4);
-            object-fit: cover;
-        }
-        @media (min-aspect-ratio: 16/9) { .video-container iframe { height: 56.25vw; } }
-        @media (max-aspect-ratio: 16/9) { .video-container iframe { width: 177.78vh; } }
-        
-        .hero-content { position: relative; z-index: 2; text-align: center; color: var(--white); }
-        .hero-title { font-size: clamp(3rem, 12vw, 8rem); font-weight: 900; letter-spacing: 20px; text-transform: uppercase; }
-
-        /* Nav & Controls */
+        /* Nav Bar */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 25px 5%; position: sticky; top: 0; z-index: 100;
             background: var(--bg-color); border-bottom: 1px solid var(--border-color);
             transition: background-color 0.3s, border-color 0.3s;
         }
+        .nav-menu { display: flex; gap: 20px; }
         .nav-links { display: flex; gap: 25px; align-items: center; font-weight: 900; }
         .nav-btn { cursor: pointer; transition: 0.2s; font-size: 0.9rem; letter-spacing: 1px; }
-        .nav-btn:hover { color: var(--sale); }
+        .nav-btn:hover, .nav-btn.active { color: var(--sale); }
+
+        /* Multi-Page System: Pages Handling */
+        .page-section { display: none; }
+        .page-section.active-page { display: block; }
+
+        /* Hero Section */
+        .hero-bar {
+            width: 100%; height: 80vh; position: relative;
+            background: var(--black); display: flex; justify-content: center;
+            align-items: center; overflow: hidden;
+        }
+        .video-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .video-container iframe {
+            width: 100%; height: 100%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            filter: brightness(0.3) grayscale(0.4); object-fit: cover;
+        }
+        @media (min-aspect-ratio: 16/9) { .video-container iframe { height: 56.25vw; } }
+        @media (max-aspect-ratio: 16/9) { .video-container iframe { width: 177.78vh; } }
+        
+        .hero-content { position: relative; z-index: 2; text-align: center; color: var(--white); }
+        .hero-title { font-size: clamp(3rem, 12vw, 8rem); font-weight: 900; letter-spacing: 20px; text-transform: uppercase; }
 
         /* Controls Panel */
         .controls-panel {
@@ -118,30 +118,12 @@
         }
         .filter-btn.active, .filter-btn:hover { background: var(--text-color); color: var(--bg-color); border-color: var(--text-color); }
 
-        /* Multi-Bag Tabs Style */
-        .bag-tabs-container {
-            display: flex; gap: 8px; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;
-        }
-        .bag-tab {
-            flex: 1; padding: 8px; background: var(--input-bg); border: 1px solid var(--input-border);
-            color: var(--text-color); font-size: 0.8rem; font-weight: bold; transition: 0.2s; text-align: center;
-        }
-        .bag-tab.active { background: var(--text-color); color: var(--bg-color); border-color: var(--text-color); }
-
-        /* Custom Upload Style */
-        .upload-box {
-            border: 2px dashed var(--input-border); padding: 15px; text-align: center;
-            background: var(--input-bg); margin: 15px 0; border-radius: 4px; transition: 0.3s;
-        }
-        .upload-box:hover { border-color: var(--sale); }
-        .upload-label { font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 8px; }
-        .upload-input { display: none; }
-        .upload-btn {
-            display: inline-block; background: var(--border-color); color: var(--text-color);
-            padding: 6px 15px; font-size: 0.75rem; font-weight: bold; border-radius: 3px; transition: 0.2s;
-        }
-        .upload-btn:hover { background: var(--sale); color: white; }
-        .preview-upload-img { max-width: 60px; max-height: 60px; object-fit: cover; margin-top: 8px; display: none; border: 1px solid var(--border-color); }
+        /* Custom Page Upload Styles */
+        .upload-page-container { max-width: 700px; margin: 60px auto; padding: 40px; background: var(--card-bg); border: 1px solid var(--border-color); text-align: center; }
+        .upload-zone { border: 2px dashed var(--input-border); padding: 40px 20px; margin: 25px 0; background: var(--input-bg); cursor: pointer; transition: 0.3s; }
+        .upload-zone:hover { border-color: var(--sale); }
+        .file-input { display: none; }
+        .preview-img { max-width: 100%; max-height: 300px; margin-top: 20px; display: none; border: 1px solid var(--border-color); }
 
         /* Grid & Cards */
         .container { max-width: 1400px; margin: 40px auto 80px; padding: 0 5%; }
@@ -182,9 +164,9 @@
             display: flex; flex-direction: column; border-left: 1px solid var(--border-color);
         }
         .cart-overlay.active, .login-overlay.active, .quickview-overlay.active { right: 0; }
+        
         .cart-overlay { max-width: 500px; overflow-y: auto; }
         .quickview-overlay { max-width: 500px; overflow-y: auto; }
-        
         .qv-img { width: 100%; height: 350px; background: #222; margin-bottom: 20px; overflow: hidden; }
         .qv-img img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -226,23 +208,13 @@
         <span id="countdown-timer" style="letter-spacing: 2px; font-family:monospace; color:yellow;">00:00:00</span>
     </div>
 
-    <div id="sales-pop" class="sales-notification">
-        <b id="buyer-name">Ahmed from Damietta</b>
-        <p id="buyer-action" style="font-size:0.85rem; opacity:0.8;">bought Eleven Piece</p>
-    </div>
-
-    <header class="hero-bar">
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/5i0vYvWcaGo?autoplay=1&mute=1&controls=0&loop=1&playlist=5i0vYvWcaGo" frameborder="0" allow="autoplay; encrypted-media"></iframe>
-        </div>
-        <div class="hero-content">
-            <h1 class="hero-title">ELEVEN</h1>
-            <p style="letter-spacing:10px; font-size:0.8rem;">GLOBAL STREETWEAR</p>
-        </div>
-    </header>
-
     <nav>
-        <div style="font-weight:900; letter-spacing:4px;">ELEVEN </div>
+        <div style="font-weight:900; letter-spacing:4px; cursor:pointer;" onclick="navigateToPage('home')">ELEVEN </div>
+        <div class="nav-menu">
+            <span class="nav-btn active" id="nav-home" onclick="navigateToPage('home')">HOME</span>
+            <span class="nav-btn" id="nav-upload" onclick="navigateToPage('upload')">CUSTOM DESIGN</span>
+            <span class="nav-btn" id="nav-about" onclick="navigateToPage('about')">ABOUT</span>
+        </div>
         <div class="nav-links">
             <div class="nav-btn" id="themeBtn" onclick="toggleTheme()" style="font-size: 1.1rem;">🌙</div>
             <div class="nav-btn" id="langBtn" onclick="toggleLanguage()" style="color:#25d366;">AR</div>
@@ -251,24 +223,73 @@
         </div>
     </nav>
 
-    <div class="controls-panel">
-        <div class="filter-buttons">
-            <button class="filter-btn active" id="btn-all" onclick="filterItems('all', this)">ALL</button>
-            <button class="filter-btn" id="btn-best" onclick="filterItems('best', this)">BEST SELLERS</button>
-            <button class="filter-btn" id="btn-sale" onclick="filterItems('sale', this)">SALES</button>
+    <div id="page-home" class="page-section active-page">
+        <header class="hero-bar">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/5i0vYvWcaGo?autoplay=1&mute=1&controls=0&loop=1&playlist=5i0vYvWcaGo" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+            </div>
+            <div class="hero-content">
+                <h1 class="hero-title">ELEVEN</h1>
+                <p style="letter-spacing:10px; font-size:0.8rem;">GLOBAL STREETWEAR</p>
+            </div>
+        </header>
+
+        <div class="controls-panel">
+            <div class="filter-buttons">
+                <button class="filter-btn active" id="btn-all" onclick="filterItems('all', this)">ALL</button>
+                <button class="filter-btn" id="btn-best" onclick="filterItems('best', this)">BEST SELLERS</button>
+                <button class="filter-btn" id="btn-sale" onclick="filterItems('sale', this)">SALES</button>
+            </div>
+            <input type="text" class="search-box" id="searchBar" oninput="searchProducts()" placeholder="Search by piece number...">
         </div>
-        <input type="text" class="search-box" id="searchBar" oninput="searchProducts()" placeholder="Search by piece number...">
+
+        <section class="container">
+            <div class="product-grid" id="product-grid"></div>
+        </section>
     </div>
 
-    <section class="container">
-        <div class="product-grid" id="product-grid"></div>
-    </section>
+    <div id="page-upload" class="page-section">
+        <div class="upload-page-container">
+            <h2 style="letter-spacing: 3px; font-weight:900;" id="upload-page-title">CUSTOM DESIGN WORKSHOP</h2>
+            <p style="opacity:0.6; font-size:0.9rem; margin-top:10px;" id="upload-page-desc">Upload your own graphic or art file, select your size, and we will manufacture your premium custom streetwear piece.</p>
+            
+            <div class="upload-zone" onclick="document.getElementById('file-selector-input').click()">
+                <span style="font-size:1.2rem; display:block; font-weight:bold;" id="upload-zone-text">📂 CLICK TO UPLOAD YOUR ARTWORK</span>
+                <span style="font-size:0.75rem; opacity:0.5;">Supports PNG, JPG, JPEG</span>
+                <input type="file" id="file-selector-input" class="file-input" accept="image/*" onchange="triggerUploadProcess(this)">
+                <img id="custom-page-preview" class="preview-img" alt="Artwork Preview">
+            </div>
+
+            <div style="margin:20px 0; text-align:left;">
+                <label style="font-weight:bold; font-size:0.9rem;" id="upload-size-label">SELECT SIZE FOR CUSTOM PIECE:</label>
+                <div class="size-selector" style="margin-top:10px;">
+                    <button class="size-btn" id="custom-size-M" onclick="selectCustomPageSize('M')">M</button>
+                    <button class="size-btn" id="custom-size-L" onclick="selectCustomPageSize('L')">L</button>
+                    <button class="size-btn" id="custom-size-XL" onclick="selectCustomPageSize('XL')">XL</button>
+                </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin:30px 0; border-top:1px solid var(--border-color); padding-top:20px;">
+                <span style="font-weight:900; font-size:1.2rem;">ESTIMATED PRICE:</span>
+                <span style="font-weight:900; font-size:1.5rem; color:var(--sale);">600 EGP</span>
+            </div>
+
+            <button class="add-btn" style="background:var(--text-color); color:var(--bg-color);" onclick="addCustomUploadedItemToBag()">ADD CUSTOM PIECE TO BAG</button>
+        </div>
+    </div>
+
+    <div id="page-about" class="page-section" style="padding:100px 10%; text-align:center;">
+        <h2 style="font-size:3rem; font-weight:900; letter-spacing:10px; margin-bottom:30px;">THE ELEVEN STORY</h2>
+        <p style="max-width:800px; margin:0 auto; line-height:2; opacity:0.8; font-size:1.1rem;" id="about-text">
+            Eleven is a premium global streetwear brand born to push boundaries. Blending subculture styles with luxury modern cuts, we define raw urban aesthetics for generations that refuse to conform. Every piece is crafted with meticulously sourced heavy cotton, precise silhouettes, and durable art prints.
+        </p>
+    </div>
 
     <footer style="background:#000; padding:80px 5%; text-align:center; border-top:1px solid #111; color: white;">
         <h2 style="font-size:2.5rem; letter-spacing:10px; margin-bottom:30px;">ELEVEN</h2>
         <div class="social-links">
-            <a href="https://www.instagram.com/eleven.pop" target="_blank" style="color: white;">INSTAGRAM</a>
-            <a href="https://www.tiktok.com/@eleven.pop" target="_blank" style="color: white;">TIKTOK</a>
+            <a href="https://www.instagram.com/eleven.eg2026" target="_blank" style="color: white;">INSTAGRAM</a>
+            <a href="https://www.tiktok.com/@eleven.2025" target="_blank" style="color: white;">TIKTOK</a>
         </div>
         <p style="opacity:0.3; font-size:0.7rem;">© 2026 ELEVEN LOCAL BRAND. ALL RIGHTS RESERVED.</p>
     </footer>
@@ -278,9 +299,7 @@
             <h3 id="qv-title" style="letter-spacing: 3px;">QUICK VIEW</h3>
             <span onclick="toggleQuickView()" style="font-size: 1.5rem; cursor:pointer;">✕</span>
         </div>
-        <div class="qv-img">
-            <img id="qv-image-src" src="" alt="">
-        </div>
+        <div class="qv-img"> <img id="qv-image-src" src="" alt=""> </div>
         <div style="margin-bottom:20px;">
             <h2 id="qv-display-name" style="margin-bottom:10px;"></h2>
             <div style="display:flex; gap:15px; font-size:1.2rem; margin-bottom:15px;">
@@ -288,13 +307,6 @@
                 <span style="text-decoration:line-through; opacity:0.4;">699 EGP</span>
             </div>
             <p id="qv-desc" style="font-size:0.9rem; opacity:0.7; line-height:1.6;"></p>
-            
-            <div class="upload-box">
-                <span class="upload-label" id="trans-upload-label">🎨 Want a Custom Design? Upload it here:</span>
-                <label class="upload-btn" for="qv-file-input">CHOOSE IMAGE</label>
-                <input type="file" id="qv-file-input" class="upload-input" accept="image/*" onchange="handleFileUpload(this, 'qv-preview')">
-                <br><img id="qv-preview" class="preview-upload-img" alt="Custom design preview">
-            </div>
         </div>
         <div id="qv-actions-container"></div>
     </div>
@@ -308,15 +320,9 @@
     </div>
 
     <div class="cart-overlay" id="cartOverlay">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
             <h2 id="cart-title-txt" style="letter-spacing: 5px;">YOUR BAG</h2>
             <span onclick="toggleCart()" style="font-size: 1.5rem; cursor:pointer;">✕</span>
-        </div>
-        
-        <div class="bag-tabs-container">
-            <button class="bag-tab active" id="tab-bag1" onclick="switchBag('bag1')">Bag 1</button>
-            <button class="bag-tab" id="tab-bag2" onclick="switchBag('bag2')">Bag 2</button>
-            <button class="bag-tab" id="tab-bag3" onclick="switchBag('bag3')">Bag 3</button>
         </div>
         
         <div id="cart-items"></div>
@@ -371,16 +377,9 @@
         let currentLang = 'en'; 
         let currentTheme = 'dark';
         
-        // نظام الحقائب المتعددة (Multi-Bag System)
-        let activeBag = 'bag1';
-        let multiCart = {
-            bag1: [],
-            bag2: [],
-            bag3: []
-        };
-        
-        // متغير عالمي لحفظ التصميم المرفوع مؤقتاً
-        let currentUploadedDesign = null;
+        // متغيرات حفظ تصميم صفحة الرفع المخصصة
+        let customPageUploadedFile = null;
+        let customPageSelectedSize = null;
 
         const translations = {
             ar: {
@@ -415,7 +414,13 @@
                 shippingCost: "تكلفة الشحن:",
                 selectGov: "اختر المحافظة (لتحديد تكلفة الشحن)",
                 formError: "من فضلك املأ جميع بيانات الشحن بالتفصيل يا بطل!",
-                customUpload: "🎨 هل تريد تصميم خاص؟ ارفع صورتك هنا:"
+                
+                // ترجمة صفحات الملتي بيج والرفع الجديدة
+                uploadPageTitle: "ورشة التصاميم الخاصة 🎨",
+                uploadPageDesc: "ارفع صورتك أو تصميمك الفني الخاص، واختار المقاس، وإحنا هنصنعلك القطعة بجودة براند عالمي فاخر.",
+                uploadZoneText: "📂 اضغط هنا لرفع تصميمك الخاص",
+                uploadSizeLabel: "اختر مقاس قطعتك المخصصة:",
+                aboutText: "إيلافن هي علامة تجارية رائدة في ملابس الشارع (Streetwear) تم إنشاؤها لكسر القواعد. ندمج بين أسلوب الثقافات الحضرية والقصات العصرية الفاخرة لنعبر عن جيل يرفض التقليد. كل قطعة مصنوعة من القطن الثقيل الفاخر بدقة متناهية وطبعات ديجيتال تدوم طويلاً."
             },
             en: {
                 announcement: "FLASH SALE FOR A LIMITED TIME! ENDS IN:",
@@ -449,9 +454,79 @@
                 shippingCost: "Shipping Cost:",
                 selectGov: "Select Governorate (Shipping Location)",
                 formError: "Please fill out all shipping details first!",
-                customUpload: "🎨 Want a Custom Design? Upload it here:"
+                
+                uploadPageTitle: "CUSTOM DESIGN WORKSHOP",
+                uploadPageDesc: "Upload your own graphic or art file, select your size, and we will manufacture your premium custom streetwear piece.",
+                uploadZoneText: "📂 CLICK TO UPLOAD YOUR ARTWORK",
+                uploadSizeLabel: "SELECT SIZE FOR CUSTOM PIECE:",
+                aboutText: "Eleven is a premium global streetwear brand born to push boundaries. Blending subculture styles with luxury modern cuts, we define raw urban aesthetics for generations that refuse to conform. Every piece is crafted with meticulously sourced heavy cotton, precise silhouettes, and durable art prints."
             }
         };
+
+        // نظام التنقل بين الصفحات المتعددة (Multi-Page System JavaScript)
+        function navigateToPage(pageId) {
+            // إخفاء كل الصفحات أولاً
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active-page'));
+            document.querySelectorAll('.nav-menu .nav-btn').forEach(btn => btn.classList.remove('active'));
+            
+            // إظهار الصفحة المطلوبة وتنشيط زر الـ Nav
+            document.getElementById(`page-${pageId}`).classList.add('active-page');
+            document.getElementById(`nav-${pageId}`).classList.add('active');
+            
+            // إغلاق أي نافذة جانبية مفتوحة بالخطأ
+            document.getElementById('cartOverlay').classList.remove('active');
+            document.getElementById('loginOverlay').classList.remove('active');
+            window.scrollTo(0,0);
+        }
+
+        // التعامل مع رفع الصورة في صفحة الديزاين الخاصة
+        function triggerUploadProcess(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('custom-page-preview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    customPageUploadedFile = file.name;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function selectCustomPageSize(size) {
+            customPageSelectedSize = size;
+            document.querySelectorAll('#page-upload .size-btn').forEach(b => b.classList.remove('selected'));
+            document.getElementById(`custom-size-${size}`).classList.add('selected');
+        }
+
+        function addCustomUploadedItemToBag() {
+            if (!customPageUploadedFile) {
+                return alert(currentLang === 'en' ? "Please upload your design first!" : "من فضلك ارفع تصميمك الفني أولاً يا بطل!");
+            }
+            if (!customPageSelectedSize) {
+                return alert(translations[currentLang].selectSizeError);
+            }
+
+            // إضافة التصميم المرفوع للسلة كمنتج خاص بسعر 600 جنيه
+            cart.push({
+                id: Date.now(),
+                isCustomPageItem: true,
+                price: 600,
+                size: customPageSelectedSize,
+                fileName: customPageUploadedFile
+            });
+
+            // تصفير الخيارات بعد الإضافة بنجاح لتجهيز الصفحة لرفع أخر
+            customPageUploadedFile = null;
+            customPageSelectedSize = null;
+            document.getElementById('custom-page-preview').style.display = 'none';
+            document.getElementById('file-selector-input').value = '';
+            document.querySelectorAll('#page-upload .size-btn').forEach(b => b.classList.remove('selected'));
+
+            updateCart();
+            toggleCart();
+        }
 
         function toggleTheme() {
             currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -474,7 +549,6 @@
             document.getElementById('promo-btn-txt').innerText = translations[currentLang].promoApply;
             document.getElementById('total-txt').innerText = translations[currentLang].total;
             document.getElementById('checkout-btn-txt').innerText = translations[currentLang].checkout;
-            document.getElementById('trans-upload-label').innerText = translations[currentLang].customUpload;
             
             document.getElementById('checkout-shipping-title').innerText = translations[currentLang].shippingTitle;
             document.getElementById('custName').placeholder = translations[currentLang].fName;
@@ -482,6 +556,13 @@
             document.getElementById('custAddress').placeholder = translations[currentLang].addr;
             document.getElementById('subtotal-txt').innerText = translations[currentLang].subtotal;
             document.getElementById('shipping-txt').innerText = translations[currentLang].shippingCost;
+
+            // تحديث نصوص صفحة الرفع التفاعلية الجديدة
+            document.getElementById('upload-page-title').innerText = translations[currentLang].uploadPageTitle;
+            document.getElementById('upload-page-desc').innerText = translations[currentLang].uploadPageDesc;
+            document.getElementById('upload-zone-text').innerText = translations[currentLang].uploadZoneText;
+            document.getElementById('upload-size-label').innerText = translations[currentLang].uploadSizeLabel;
+            document.getElementById('about-text').innerText = translations[currentLang].aboutText;
 
             setupLoginUI();
             renderProducts(selectedItems);
@@ -528,11 +609,10 @@
         setInterval(updateTimer, 1000);
 
         const selectedItems = [];
-        for (let i = 9; i <= 48; i++) {
-            selectedItems.push(i);
-        }
+        for (let i = 9; i <= 48; i++) { selectedItems.push(i); }
 
         const grid = document.getElementById('product-grid');
+        let cart = [];
         let selections = {};
         let wishlist = [];
         let discount = 0;
@@ -544,31 +624,6 @@
             } else {
                 img.src = `https://placehold.co/500x700?text=ELEVEN+PIECE+${id}`;
             }
-        }
-
-        // التعامل برمجياً مع رفع التصاميم المخصصة وقراءتها فوراً
-        function handleFileUpload(input, previewId) {
-            const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const previewImg = document.getElementById(previewId);
-                    previewImg.src = e.target.result;
-                    previewImg.style.display = 'inline-block';
-                    currentUploadedDesign = {
-                        fileName: file.name,
-                        fileData: e.target.result // كود الصورة الأساسي للطباعة والتأكيد
-                    };
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function switchBag(bagName) {
-            activeBag = bagName;
-            document.querySelectorAll('.bag-tab').forEach(t => t.classList.remove('active'));
-            document.getElementById(`tab-${bagName}`).classList.add('active');
-            updateCart();
         }
 
         function renderProducts(itemsToRender) {
@@ -628,11 +683,6 @@
             
             document.getElementById('qv-desc').innerText = translations[currentLang].qvDesc;
             
-            // إعادة ضبط حقل الرفع عند فتح كارت جديد
-            currentUploadedDesign = null;
-            document.getElementById('qv-preview').style.display = 'none';
-            document.getElementById('qv-file-input').value = "";
-
             document.getElementById('qv-actions-container').innerHTML = `
                 <div class="size-selector" id="qv-size-group">
                     <button class="size-btn ${selections[id] === 'M' ? 'selected' : ''}" onclick="selectSize(this, 'M', ${id}, true)">M</button>
@@ -662,7 +712,7 @@
         }
 
         function updateCartItemSize(cartItemId, newSize) {
-            const item = multiCart[activeBag].find(x => x.id === cartItemId);
+            const item = cart.find(x => x.id === cartItemId);
             if (item) {
                 item.size = newSize;
                 updateCart();
@@ -725,24 +775,13 @@
 
         function addToBag(id, name, price) {
             if (!selections[id]) { alert(translations[currentLang].selectSizeError); return; }
-            
-            // إضافة المنتج للشنطة النشطة حالياً مع حفظ بيانات التصميم المرفوع إن وجد
-            multiCart[activeBag].push({ 
-                id: Date.now(), 
-                idNum: id, 
-                price: price, 
-                size: selections[id],
-                customDesign: currentUploadedDesign ? currentUploadedDesign.fileName : null
-            });
-            
-            // تصفير المرفوعات للاستعداد للمنتج القادم
-            currentUploadedDesign = null;
+            cart.push({ id: Date.now(), idNum: id, price: price, size: selections[id], isCustomPageItem: false });
             updateCart();
             toggleCart();
         }
 
         function removeFromCart(itemId) {
-            multiCart[activeBag] = multiCart[activeBag].filter(item => item.id !== itemId);
+            cart = cart.filter(item => item.id !== itemId);
             updateCart();
         }
 
@@ -751,18 +790,15 @@
             let subtotal = 0;
             container.innerHTML = '';
             
-            // قراءة المنتجات من الـ Active Bag الحالية فقط
-            const currentCartItems = multiCart[activeBag];
-            
-            currentCartItems.forEach(item => {
+            cart.forEach(item => {
                 subtotal += item.price;
-                const designBadge = item.customDesign ? `<span style="display:block; font-size:0.75rem; color:var(--sale); font-weight:bold;">🎨 Custom Design: ${item.customDesign}</span>` : '';
+                // تخصيص شكل اسم وعرض المنتج في السلة بناءاً على ما إذا كان تصميم جاهز أو مرفوع من صفحة الـ Custom Page
+                let displayName = item.isCustomPageItem ? `🎨 Custom Design (${item.fileName})` : `ELEVEN Piece #${item.idNum}`;
                 
                 container.innerHTML += `
                 <div class="cart-item">
                     <div class="cart-item-details">
-                        <b>ELEVEN Piece #${item.idNum}</b>
-                        ${designBadge}
+                        <b>${displayName}</b>
                         <div class="cart-item-size-editor">
                             <button class="cart-size-edit-btn ${item.size === 'M' ? 'active' : ''}" onclick="updateCartItemSize(${item.id}, 'M')">M</button>
                             <button class="cart-size-edit-btn ${item.size === 'L' ? 'active' : ''}" onclick="updateCartItemSize(${item.id}, 'L')">L</button>
@@ -786,15 +822,14 @@
             
             let finalTotal = subtotal + shippingCost;
             
-            document.getElementById('cart-count').innerText = currentCartItems.length;
+            document.getElementById('cart-count').innerText = cart.length;
             document.getElementById('cart-subtotal-val').innerText = Math.round(subtotal);
             document.getElementById('cart-shipping-val').innerText = shippingCost;
             document.getElementById('cart-total').innerText = Math.round(finalTotal);
         }
 
         function checkoutWhatsApp() {
-            const currentCartItems = multiCart[activeBag];
-            if (currentCartItems.length === 0) return alert(currentLang === 'en' ? "Bag is empty" : "الحقيبة فارغة");
+            if (cart.length === 0) return alert(currentLang === 'en' ? "Bag is empty" : "الحقيبة فارغة");
             
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
@@ -812,8 +847,7 @@
             const subtotalVal = document.getElementById('cart-subtotal-val').innerText;
             const totalVal = document.getElementById('cart-total').innerText;
 
-            let msg = `====== NEW ORDER (ELEVEN) ======%0A`;
-            msg += `Active Bag: ${activeBag.toUpperCase()}%0A%0A`;
+            let msg = `====== NEW ORDER (ELEVEN) ======%0A%0A`;
             msg += `--- CUSTOMER DETAILS ---%0A`;
             msg += `• Name: ${name}%0A`;
             msg += `• WhatsApp: ${phone}%0A`;
@@ -822,9 +856,12 @@
             msg += `• Payment Method: ${payment}%0A%0A`;
             
             msg += `--- ORDERED PIECES ---%0A`;
-            currentCartItems.forEach((item, index) => {
-                let customText = item.customDesign ? ` | Custom Upload: [${item.customDesign}]` : '';
-                msg += `${index + 1}. • Product: ELEVEN PIECE %23${item.idNum} | Size: ${item.size} | Price: ${item.price} EGP${customText}%0A`;
+            cart.forEach((item, index) => {
+                if (item.isCustomPageItem) {
+                    msg += `${index + 1}. • Product: CUSTOM DESIGNED PIECE | Size: ${item.size} | Photo: [${item.fileName}] | Price: ${item.price} EGP%0A`;
+                } else {
+                    msg += `${index + 1}. • Product: ELEVEN PIECE %23${item.idNum} | Size: ${item.size} | Price: ${item.price} EGP%0A`;
+                }
             });
             
             msg += `%0A--- FINAL RECEIPT ---%0A`;
